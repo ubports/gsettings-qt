@@ -1,0 +1,5 @@
+gsettings-qt (0.0-ubuntu1) UNRELEASED; urgency=low
+
+  * Initial package
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Thu, 20 Jun 2013 14:26:54 -0400

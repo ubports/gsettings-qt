@@ -1,0 +1,25 @@
+Source: gsettings-qt
+Priority: extra
+Maintainer: Ubuntu Desktop Team <ubuntu-desktop@lists.ubuntu.com>
+Build-Depends: debhelper (>= 9),
+               pkg-config,
+               libglib2.0-dev,
+               qtchooser,
+               qt5-qmake,
+               qtbase5-dev,
+               qtdeclarative5-dev,
+               qtdeclarative5-qtquick2-plugin,
+Standards-Version: 3.9.4
+Section: libs
+Homepage: https://launchpad.net/gsettings-qt
+# If you aren't a member of ~ubuntu-desktop but need to upload packaging changes,
+# just go ahead.  ~super-friends will notice and sync up the code again.
+Vcs-Bzr: https://code.launchpad.net/~ubuntu-desktop/gsettings-qt/trunk
+
+Package: qtdeclarative5-gsettings1.0
+Section: libs
+Architecture: amd64 i386 armhf
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: QML Bindings for GSettings
+ Expose QML bindings for GSettings
