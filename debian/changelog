@@ -1,5 +1,5 @@
-gsettings-qt (0.0-0ubuntu1) UNRELEASED; urgency=low
+gsettings-qt (0.0-0ubuntu1) saucy; urgency=low
 
   * Initial package
 
- -- Ken VanDine <ken.vandine@canonical.com>  Thu, 20 Jun 2013 14:26:54 -0400
+ -- Ken VanDine <ken.vandine@canonical.com>  Fri, 21 Jun 2013 14:35:13 -0400
