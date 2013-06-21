@@ -19,7 +19,7 @@ Vcs-Bzr: https://code.launchpad.net/~system-settings-touch/gsettings-qt/trunk
 
 Package: qtdeclarative5-gsettings1.0
 Section: libs
-Architecture: amd64 i386 armhf
+Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: QML Bindings for GSettings
