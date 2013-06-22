@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="com.canonical.gsettings.Test" path="/com/canonical/gsettings/test/">
+    <key name="test-integer" type="i">
+      <default>42</default>
+    </key>
+    <key name="test-double" type="d">
+      <default>1.5</default>
+    </key>
+    <key name="test-boolean" type="b">
+      <default>false</default>
+    </key>
+    <key name="test-string" type="s">
+      <default>"hello"</default>
+    </key>
+  </schema>
+</schemalist>
