@@ -1,6 +1,7 @@
 TEMPLATE = lib
 INCLUDEPATH += .
 QT += qml
+QT -= gui
 CONFIG += debug link_pkgconfig
 PKGCONFIG += gio-2.0
 DEFINES += QT_NO_KEYWORDS

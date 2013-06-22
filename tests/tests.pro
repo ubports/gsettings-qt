@@ -1,5 +1,6 @@
 TEMPLATE = app
 QT += qml testlib
+QT -= gui
 CONFIG += qmltestcase
 TARGET = test
 IMPORTPATH = $$PWD/..
