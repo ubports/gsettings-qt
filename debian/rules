@@ -9,7 +9,7 @@ override_dh_install:
 	dh_install --fail-missing
 
 override_dh_auto_test:
-	xvfb-run dh_auto_test
+	xvfb-run -a dh_auto_test
 
 %:
 	dh $@ 
