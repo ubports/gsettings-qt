@@ -1,3 +1,26 @@
+gsettings-qt (0.0+13.10.20130626.1-0ubuntu1) saucy; urgency=low
+
+  [ Ken VanDine ]
+  * build depend on qtdeclarative5-test-plugin .
+
+  [ Lars Uebernickel ]
+  * gsettings-qt: gsettings bindings for qml
+  * Merge initial packaging From lp:~ken-vandine/gsettings-qt/packaging
+  * Add basic testing
+  * Remove QtGui dependency qmake adds this by default. Note that this
+    does not remove the dependency from `make check`, qtquicktests
+    depends on it.
+  * debian: run `make check` under xvfb-run
+  * Merge trunk
+  * debian: run xvfb with -a
+  * Don't install tests Merged from lp:~ken-vandine/gsettings-
+    qt/no_install_tests
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 11
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Wed, 26 Jun 2013 19:36:35 +0000
+
 gsettings-qt (0.0-0ubuntu1) saucy; urgency=low
 
   * Initial package
