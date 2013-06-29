@@ -1,3 +1,9 @@
+gsettings-qt (0.0+13.10.20130629-0ubuntu1) saucy; urgency=low
+
+  * Automatic snapshot from revision 15
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Sat, 29 Jun 2013 07:01:00 +0000
+
 gsettings-qt (0.0+13.10.20130628.1-0ubuntu1) saucy; urgency=low
 
   * Automatic snapshot from revision 14
