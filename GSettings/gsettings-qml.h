@@ -36,10 +36,13 @@ public:
     QByteArray path() const;
     void setPath(const QByteArray &path);
 
-    void updateKey(const char *gkey);
+    void updateKey(const char *gkey, bool emitChanged);
 
     void classBegin();
     void componentComplete();
+
+Q_SIGNALS:
+    void changed (const QString &key, const QVariant &value);
 
 private:
     struct GSettingsQmlPrivate *priv;
