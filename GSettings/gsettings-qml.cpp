@@ -124,7 +124,6 @@ static gchar * unqtify_name(const QString &name)
 
 void GSettingsQml::updateKey(const gchar *gkey, bool emitChanged)
 {
-    qDebug() << "Updating" << gkey;
     QString qkey;
     GVariant *value;
     QVariant qvalue;
@@ -171,7 +170,6 @@ void GSettingsQml::componentComplete()
 
 QVariant GSettingsQml::updateValue(const QString& key, const QVariant &value)
 {
-    qDebug() << "UpdateValue" << key;
     GVariant *cur;
     GVariant *new_value;
     gchar *gkey;
