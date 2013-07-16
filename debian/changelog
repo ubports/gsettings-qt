@@ -1,3 +1,13 @@
+gsettings-qt (0.0+13.10.20130716-0ubuntu1) saucy; urgency=low
+
+  [ Iain Lane ]
+  * Add a testcase for the onChanged signal.
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 21
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Tue, 16 Jul 2013 07:01:42 +0000
+
 gsettings-qt (0.0+13.10.20130713-0ubuntu1) saucy; urgency=low
 
   [ Lars Uebernickel ]
