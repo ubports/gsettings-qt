@@ -72,16 +72,49 @@ void GSettingsSchemaQml::setPath(const QByteArray &path)
     priv->path = path;
 }
 
+QVariantList GSettingsSchemaQml::choices(const QByteArray &key) const
+{
+    GSettingsQml *parent = (GSettingsQml *) this->parent();
+    GVariant *range;
+    const gchar *type;
+    GVariant *value;
+    QVariantList choices;
+
+    if (parent->priv->settings == NULL)
+        return choices;
+
+    range = g_settings_get_range (parent->priv->settings, key.constData());
+    if (range == NULL)
+        return choices;
+
+    g_variant_get (range, "(&sv)", &type, &value);
+
+    if (g_str_equal (type, "enum")) {
+        GVariantIter iter;
+        GVariant *child;
+
+        g_variant_iter_init (&iter, value);
+        while ((child = g_variant_iter_next_value (&iter))) {
+            choices.append(qconf_types_to_qvariant(child));
+            g_variant_unref (child);
+        }
+    }
+
+    g_variant_unref (value);
+    g_variant_unref (range);
+
+    return choices;
+}
+
 GSettingsQml::GSettingsQml(QObject *parent): QQmlPropertyMap(this, parent)
 {
     priv = new GSettingsQmlPrivate;
-    priv->schema = new GSettingsSchemaQml;
+    priv->schema = new GSettingsSchemaQml(this);
+    priv->settings = NULL;
 }
 
 GSettingsQml::~GSettingsQml()
 {
-    delete priv->schema;
-
     if (priv->settings)
         g_object_unref (priv->settings);
 
@@ -185,6 +218,8 @@ void GSettingsQml::componentComplete()
     for (i = 0; keys[i]; i++)
         this->updateKey(keys[i]);
     g_strfreev(keys);
+
+    Q_EMIT(schemaChanged());
 }
 
 QVariant GSettingsQml::updateValue(const QString& key, const QVariant &value)

@@ -35,6 +35,8 @@ public:
     QByteArray path() const;
     void setPath(const QByteArray &path);
 
+    Q_INVOKABLE QVariantList choices(const QByteArray &key) const;
+
 private:
     struct GSettingsSchemaQmlPrivate *priv;
 };
@@ -43,7 +45,7 @@ class GSettingsQml: public QQmlPropertyMap, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
-    Q_PROPERTY(GSettingsSchemaQml* schema READ schema)
+    Q_PROPERTY(GSettingsSchemaQml* schema READ schema NOTIFY schemaChanged)
 
 public:
     GSettingsQml(QObject *parent = NULL);
@@ -56,8 +58,13 @@ public:
     void classBegin();
     void componentComplete();
 
+Q_SIGNALS:
+    void schemaChanged();
+
 private:
     struct GSettingsQmlPrivate *priv;
 
     QVariant updateValue(const QString& key, const QVariant &value);
+
+    friend class GSettingsSchemaQml;
 };
