@@ -19,6 +19,7 @@
 #include "gsettings-qml.h"
 #include "qconftypes.h"
 #include <gio/gio.h>
+#include "util.h"
 
 struct GSettingsSchemaQmlPrivate
 {
@@ -72,9 +73,10 @@ void GSettingsSchemaQml::setPath(const QByteArray &path)
     priv->path = path;
 }
 
-QVariantList GSettingsSchemaQml::choices(const QByteArray &key) const
+QVariantList GSettingsSchemaQml::choices(const QByteArray &qkey) const
 {
     GSettingsQml *parent = (GSettingsQml *) this->parent();
+    gchar *key;
     GVariant *range;
     const gchar *type;
     GVariant *value;
@@ -83,7 +85,10 @@ QVariantList GSettingsSchemaQml::choices(const QByteArray &key) const
     if (parent->priv->settings == NULL)
         return choices;
 
-    range = g_settings_get_range (parent->priv->settings, key.constData());
+    key = unqtify_name (qkey);
+    range = g_settings_get_range (parent->priv->settings, key);
+    g_free (key);
+
     if (range == NULL)
         return choices;
 
@@ -124,57 +129,6 @@ GSettingsQml::~GSettingsQml()
 GSettingsSchemaQml * GSettingsQml::schema() const
 {
     return priv->schema;
-}
-
-/* convert 'some-key' to 'someKey' or 'SomeKey'.
- * the second form is needed for appending to 'set' for 'setSomeKey'
- */
-static QString qtify_name(const char *name)
-{
-    bool next_cap = false;
-    QString result;
-
-    while (*name) {
-        if (*name == '-') {
-            next_cap = true;
-        } else if (next_cap) {
-            result.append(toupper(*name));
-            next_cap = false;
-        } else {
-            result.append(*name);
-        }
-
-        name++;
-    }
-
-    return result;
-}
-
-/* Convert 'someKey' to 'some-key'
- *
- * This is the inverse function of qtify_name, iff qtify_name was called with a
- * valid gsettings key name (no capital letters, no consecutive dashes).
- *
- * Returns a newly-allocated string.
- */
-static gchar * unqtify_name(const QString &name)
-{
-    const gchar *p;
-    GString *str;
-
-    str = g_string_new_len (NULL, name.size() + 5);
-
-    for (p = name.toUtf8().constData(); *p; p++) {
-        if (isupper(*p)) {
-            g_string_append_c (str, '-');
-            g_string_append_c (str, tolower(*p));
-        }
-        else {
-            g_string_append_c (str, *p);
-        }
-    }
-
-    return g_string_free(str, FALSE);
 }
 
 void GSettingsQml::updateKey(const gchar *gkey, bool emitChanged)
