@@ -14,3 +14,5 @@ PRE_TARGETDEPS = gschemas.compiled
 
 # qmake prepends this to the command line executed by `make check`
 check.commands = GSETTINGS_BACKEND=memory GSETTINGS_SCHEMA_DIR=$$PWD
+
+OTHER_FILES += tst_GSettings.qml

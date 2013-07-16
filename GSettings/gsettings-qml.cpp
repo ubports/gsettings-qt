@@ -177,7 +177,7 @@ static gchar * unqtify_name(const QString &name)
     return g_string_free(str, FALSE);
 }
 
-void GSettingsQml::updateKey(const gchar *gkey)
+void GSettingsQml::updateKey(const gchar *gkey, bool emitChanged)
 {
     QString qkey;
     GVariant *value;
@@ -187,6 +187,9 @@ void GSettingsQml::updateKey(const gchar *gkey)
     value = g_settings_get_value(priv->settings, gkey);
     qvalue = qconf_types_to_qvariant(value);
     this->insert(qkey, qvalue);
+
+    if (emitChanged)
+        Q_EMIT (changed (qkey, qvalue));
 
     g_variant_unref(value);
 }
@@ -199,7 +202,7 @@ static void settings_key_changed(GSettings *, const gchar *key, gpointer user_da
 {
     GSettingsQml *self = (GSettingsQml *)user_data;
 
-    self->updateKey(key);
+    self->updateKey(key, true);
 }
 
 void GSettingsQml::componentComplete()
@@ -216,7 +219,7 @@ void GSettingsQml::componentComplete()
 
     keys = g_settings_list_keys(priv->settings);
     for (i = 0; keys[i]; i++)
-        this->updateKey(keys[i]);
+        this->updateKey(keys[i], false);
     g_strfreev(keys);
 
     Q_EMIT(schemaChanged());

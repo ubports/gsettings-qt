@@ -53,13 +53,14 @@ public:
 
     GSettingsSchemaQml * schema() const;
 
-    void updateKey(const char *gkey);
+    void updateKey(const char *gkey, bool emitChanged);
 
     void classBegin();
     void componentComplete();
 
 Q_SIGNALS:
     void schemaChanged();
+    void changed (const QString &key, const QVariant &value);
 
 private:
     struct GSettingsQmlPrivate *priv;
