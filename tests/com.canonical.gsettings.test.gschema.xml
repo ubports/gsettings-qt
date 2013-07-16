@@ -13,5 +13,13 @@
     <key name="test-string" type="s">
       <default>"hello"</default>
     </key>
+    <key name="test-enum" type="s">
+      <choices>
+        <choice value='one'/>
+        <choice value='two'/>
+        <choice value='three'/>
+      </choices>
+      <default>'one'</default>
+    </key>
   </schema>
 </schemalist>

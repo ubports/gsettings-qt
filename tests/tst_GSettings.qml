@@ -39,4 +39,9 @@ TestCase {
     // Clean up for test_types()
     settings["testString"] = "hello";
   }
+
+  function test_choices() {
+    compare(settings.schema.choices('testEnum'), ['one', 'two', 'three']);
+    compare(settings.schema.choices('testInteger'), []);
+  }
 }
