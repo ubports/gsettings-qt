@@ -20,55 +20,77 @@
 #include "qconftypes.h"
 #include <gio/gio.h>
 
+struct GSettingsSchemaQmlPrivate
+{
+    QByteArray id;
+    QByteArray path;
+};
+
 struct GSettingsQmlPrivate
 {
-    QByteArray schema;
-    QByteArray path;
+    GSettingsSchemaQml *schema;
     GSettings *settings;
 };
 
-GSettingsQml::GSettingsQml(QObject *parent): QQmlPropertyMap(this, parent)
+GSettingsSchemaQml::GSettingsSchemaQml(QObject *parent): QObject(parent)
 {
-    priv = new GSettingsQmlPrivate;
-    priv->settings = NULL;
+    priv = new GSettingsSchemaQmlPrivate;
 }
 
-GSettingsQml::~GSettingsQml()
+GSettingsSchemaQml::~GSettingsSchemaQml()
 {
-  if (priv->settings)
-    g_object_unref(priv->settings);
-
-  delete priv;
+    delete priv;
 }
 
-QByteArray GSettingsQml::schema() const
+QByteArray GSettingsSchemaQml::id() const
 {
-    return priv->schema;
+    return priv->id;
 }
 
-void GSettingsQml::setSchema(const QByteArray &schema)
+void GSettingsSchemaQml::setId(const QByteArray &id)
 {
-    if (priv->settings != NULL) {
-            qWarning("GSettings.schema may only be set on construction");
-            return;
+    if (!priv->id.isEmpty()) {
+        qWarning("GSettings.schema.id may only be set on construction");
+        return;
     }
 
-    priv->schema = schema;
+    priv->id = id;
 }
 
-QByteArray GSettingsQml::path() const
+QByteArray GSettingsSchemaQml::path() const
 {
     return priv->path;
 }
 
-void GSettingsQml::setPath(const QByteArray &path)
+void GSettingsSchemaQml::setPath(const QByteArray &path)
 {
-    if (priv->settings != NULL) {
-            qWarning("GSettings.path may only be set on construction");
-            return;
+    if (!priv->path.isEmpty()) {
+        qWarning("GSettings.schema.path may only be set on construction");
+        return;
     }
 
     priv->path = path;
+}
+
+GSettingsQml::GSettingsQml(QObject *parent): QQmlPropertyMap(this, parent)
+{
+    priv = new GSettingsQmlPrivate;
+    priv->schema = new GSettingsSchemaQml;
+}
+
+GSettingsQml::~GSettingsQml()
+{
+    delete priv->schema;
+
+    if (priv->settings)
+        g_object_unref (priv->settings);
+
+    delete priv;
+}
+
+GSettingsSchemaQml * GSettingsQml::schema() const
+{
+    return priv->schema;
 }
 
 /* convert 'some-key' to 'someKey' or 'SomeKey'.
@@ -152,10 +174,10 @@ void GSettingsQml::componentComplete()
     gchar **keys;
     gint i;
 
-    if (priv->path.isEmpty())
-        priv->settings = g_settings_new(priv->schema.constData());
+    if (priv->schema->path().isEmpty())
+        priv->settings = g_settings_new(priv->schema->id().constData());
     else
-        priv->settings = g_settings_new_with_path(priv->schema.constData(), priv->path.constData());
+        priv->settings = g_settings_new_with_path(priv->schema->id().constData(), priv->schema->path().constData());
 
     g_signal_connect(priv->settings, "changed", G_CALLBACK(settings_key_changed), this);
 

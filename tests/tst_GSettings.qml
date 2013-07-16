@@ -5,7 +5,7 @@ import GSettings 1.0
 TestCase {
   GSettings {
     id: settings
-    schema: "com.canonical.gsettings.Test"
+    schema.id: "com.canonical.gsettings.Test"
   }
 
   function readWriteKey(key, expectedValue, newValue) {

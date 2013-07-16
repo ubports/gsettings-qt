@@ -19,22 +19,37 @@
 #include <QtQml>
 #include <QQmlParserStatus>
 
+class GSettingsSchemaQml: public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(QByteArray id   READ id   WRITE setId)
+    Q_PROPERTY(QByteArray path READ path WRITE setPath)
+
+public:
+    GSettingsSchemaQml(QObject *parent = NULL);
+    ~GSettingsSchemaQml();
+
+    QByteArray id() const;
+    void setId(const QByteArray &id);
+
+    QByteArray path() const;
+    void setPath(const QByteArray &path);
+
+private:
+    struct GSettingsSchemaQmlPrivate *priv;
+};
+
 class GSettingsQml: public QQmlPropertyMap, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
-    Q_PROPERTY(QByteArray schema READ schema WRITE setSchema)
-    Q_PROPERTY(QByteArray path   READ path   WRITE setPath)
+    Q_PROPERTY(GSettingsSchemaQml* schema READ schema)
 
 public:
     GSettingsQml(QObject *parent = NULL);
     ~GSettingsQml();
 
-    QByteArray schema() const;
-    void setSchema(const QByteArray &schema);
-
-    QByteArray path() const;
-    void setPath(const QByteArray &path);
+    GSettingsSchemaQml * schema() const;
 
     void updateKey(const char *gkey);
 
