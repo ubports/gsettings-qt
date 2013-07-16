@@ -27,7 +27,7 @@ class GSettingsQml: public QQmlPropertyMap, public QQmlParserStatus
     Q_PROPERTY(QByteArray path   READ path   WRITE setPath)
 
 public:
-    GSettingsQml();
+    GSettingsQml(QObject *parent = NULL);
     ~GSettingsQml();
 
     QByteArray schema() const;

@@ -27,7 +27,7 @@ struct GSettingsQmlPrivate
     GSettings *settings;
 };
 
-GSettingsQml::GSettingsQml(): QQmlPropertyMap(this, NULL)
+GSettingsQml::GSettingsQml(QObject *parent): QQmlPropertyMap(this, parent)
 {
     priv = new GSettingsQmlPrivate;
     priv->settings = NULL;
