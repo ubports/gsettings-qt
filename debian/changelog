@@ -1,3 +1,17 @@
+gsettings-qt (0.0+13.10.20130717-0ubuntu1) saucy; urgency=low
+
+  [ Lars Uebernickel ]
+  * Add GSettings.schema.choices A function that takes the name of a key
+    and returns the possible values the key may assume. The values are
+    returned in a QVariantList, so they can be used as qml models (with
+    the modelData role). This breaks API: the settings schema must now
+    be set with "schema.id" and the path with "schema.path".
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 23
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Wed, 17 Jul 2013 16:55:56 +0000
+
 gsettings-qt (0.0+13.10.20130716-0ubuntu1) saucy; urgency=low
 
   [ Iain Lane ]
