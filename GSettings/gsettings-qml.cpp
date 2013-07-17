@@ -19,107 +19,116 @@
 #include "gsettings-qml.h"
 #include "qconftypes.h"
 #include <gio/gio.h>
+#include "util.h"
+
+struct GSettingsSchemaQmlPrivate
+{
+    QByteArray id;
+    QByteArray path;
+};
 
 struct GSettingsQmlPrivate
 {
-    QByteArray schema;
-    QByteArray path;
+    GSettingsSchemaQml *schema;
     GSettings *settings;
 };
 
-GSettingsQml::GSettingsQml(): QQmlPropertyMap(this, NULL)
+GSettingsSchemaQml::GSettingsSchemaQml(QObject *parent): QObject(parent)
 {
-    priv = new GSettingsQmlPrivate;
-    priv->settings = NULL;
+    priv = new GSettingsSchemaQmlPrivate;
 }
 
-GSettingsQml::~GSettingsQml()
+GSettingsSchemaQml::~GSettingsSchemaQml()
 {
-  if (priv->settings)
-    g_object_unref(priv->settings);
-
-  delete priv;
+    delete priv;
 }
 
-QByteArray GSettingsQml::schema() const
+QByteArray GSettingsSchemaQml::id() const
 {
-    return priv->schema;
+    return priv->id;
 }
 
-void GSettingsQml::setSchema(const QByteArray &schema)
+void GSettingsSchemaQml::setId(const QByteArray &id)
 {
-    if (priv->settings != NULL) {
-            qWarning("GSettings.schema may only be set on construction");
-            return;
+    if (!priv->id.isEmpty()) {
+        qWarning("GSettings.schema.id may only be set on construction");
+        return;
     }
 
-    priv->schema = schema;
+    priv->id = id;
 }
 
-QByteArray GSettingsQml::path() const
+QByteArray GSettingsSchemaQml::path() const
 {
     return priv->path;
 }
 
-void GSettingsQml::setPath(const QByteArray &path)
+void GSettingsSchemaQml::setPath(const QByteArray &path)
 {
-    if (priv->settings != NULL) {
-            qWarning("GSettings.path may only be set on construction");
-            return;
+    if (!priv->path.isEmpty()) {
+        qWarning("GSettings.schema.path may only be set on construction");
+        return;
     }
 
     priv->path = path;
 }
 
-/* convert 'some-key' to 'someKey' or 'SomeKey'.
- * the second form is needed for appending to 'set' for 'setSomeKey'
- */
-static QString qtify_name(const char *name)
+QVariantList GSettingsSchemaQml::choices(const QByteArray &qkey) const
 {
-    bool next_cap = false;
-    QString result;
+    GSettingsQml *parent = (GSettingsQml *) this->parent();
+    gchar *key;
+    GVariant *range;
+    const gchar *type;
+    GVariant *value;
+    QVariantList choices;
 
-    while (*name) {
-        if (*name == '-') {
-            next_cap = true;
-        } else if (next_cap) {
-            result.append(toupper(*name));
-            next_cap = false;
-        } else {
-            result.append(*name);
+    if (parent->priv->settings == NULL)
+        return choices;
+
+    key = unqtify_name (qkey);
+    range = g_settings_get_range (parent->priv->settings, key);
+    g_free (key);
+
+    if (range == NULL)
+        return choices;
+
+    g_variant_get (range, "(&sv)", &type, &value);
+
+    if (g_str_equal (type, "enum")) {
+        GVariantIter iter;
+        GVariant *child;
+
+        g_variant_iter_init (&iter, value);
+        while ((child = g_variant_iter_next_value (&iter))) {
+            choices.append(qconf_types_to_qvariant(child));
+            g_variant_unref (child);
         }
-
-        name++;
     }
 
-    return result;
+    g_variant_unref (value);
+    g_variant_unref (range);
+
+    return choices;
 }
 
-/* Convert 'someKey' to 'some-key'
- *
- * This is the inverse function of qtify_name, iff qtify_name was called with a
- * valid gsettings key name (no capital letters, no consecutive dashes).
- *
- * Returns a newly-allocated string.
- */
-static gchar * unqtify_name(const QString &name)
+GSettingsQml::GSettingsQml(QObject *parent): QQmlPropertyMap(this, parent)
 {
-    const gchar *p;
-    GString *str;
+    priv = new GSettingsQmlPrivate;
+    priv->schema = new GSettingsSchemaQml(this);
+    priv->settings = NULL;
+}
 
-    str = g_string_new_len (NULL, name.size() + 5);
+GSettingsQml::~GSettingsQml()
+{
+    if (priv->settings)
+        g_object_unref (priv->settings);
 
-    for (p = name.toUtf8().constData(); *p; p++) {
-        if (isupper(*p)) {
-            g_string_append_c (str, '-');
-            g_string_append_c (str, tolower(*p));
-        }
-        else {
-            g_string_append_c (str, *p);
-        }
-    }
+    delete priv;
+}
 
-    return g_string_free(str, FALSE);
+GSettingsSchemaQml * GSettingsQml::schema() const
+{
+    return priv->schema;
 }
 
 void GSettingsQml::updateKey(const gchar *gkey, bool emitChanged)
@@ -155,10 +164,10 @@ void GSettingsQml::componentComplete()
     gchar **keys;
     gint i;
 
-    if (priv->path.isEmpty())
-        priv->settings = g_settings_new(priv->schema.constData());
+    if (priv->schema->path().isEmpty())
+        priv->settings = g_settings_new(priv->schema->id().constData());
     else
-        priv->settings = g_settings_new_with_path(priv->schema.constData(), priv->path.constData());
+        priv->settings = g_settings_new_with_path(priv->schema->id().constData(), priv->schema->path().constData());
 
     g_signal_connect(priv->settings, "changed", G_CALLBACK(settings_key_changed), this);
 
@@ -166,6 +175,8 @@ void GSettingsQml::componentComplete()
     for (i = 0; keys[i]; i++)
         this->updateKey(keys[i], false);
     g_strfreev(keys);
+
+    Q_EMIT(schemaChanged());
 }
 
 QVariant GSettingsQml::updateValue(const QString& key, const QVariant &value)

@@ -10,7 +10,7 @@ TestCase {
 
   GSettings {
     id: settings
-    schema: "com.canonical.gsettings.Test"
+    schema.id: "com.canonical.gsettings.Test"
     onChanged: {
         changedKey = key
         changedValue = value
@@ -29,7 +29,7 @@ TestCase {
     readWriteKey("testBoolean", false, true);
     readWriteKey("testString", "hello", "bye");
   }
-  
+
   function test_changed() {
     settings["testString"] = "goodbye";
 
@@ -38,5 +38,10 @@ TestCase {
 
     // Clean up for test_types()
     settings["testString"] = "hello";
+  }
+
+  function test_choices() {
+    compare(settings.schema.choices('testEnum'), ['one', 'two', 'three']);
+    compare(settings.schema.choices('testInteger'), []);
   }
 }

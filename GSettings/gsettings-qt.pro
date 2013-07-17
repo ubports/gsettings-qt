@@ -7,8 +7,8 @@ PKGCONFIG += gio-2.0
 
 TARGET = GSettingsQmlPlugin
 
-HEADERS = plugin.h gsettings-qml.h qconftypes.h
-SOURCES = plugin.cpp gsettings-qml.cpp qconftypes.cpp
+HEADERS = plugin.h gsettings-qml.h qconftypes.h util.h
+SOURCES = plugin.cpp gsettings-qml.cpp qconftypes.cpp util.cpp
 
 uri = GSettings
 

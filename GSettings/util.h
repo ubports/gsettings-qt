@@ -16,13 +16,12 @@
  * Author: Lars Uebernickel <lars.uebernickel@canonical.com>
  */
 
+#ifndef __UTIL_H__
+#define __UTIL_H__
 
-#include "plugin.h"
-#include "gsettings-qml.h"
+#include <QString>
 
-void GSettingsQmlPlugin::registerTypes(const char *uri)
-{
-    qmlRegisterType<GSettingsQml>(uri, 1, 0, "GSettings");
-    qmlRegisterUncreatableType<GSettingsSchemaQml>(uri, 1, 0, "GSettingsSchema",
-                                                   "GSettingsSchema can only be used inside of a GSettings component");
-}
+QString qtify_name(const char *name);
+gchar * unqtify_name(const QString &name);
+
+#endif
