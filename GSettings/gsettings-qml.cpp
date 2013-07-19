@@ -17,9 +17,7 @@
  */
 
 #include "gsettings-qml.h"
-#include "qconftypes.h"
-#include <gio/gio.h>
-#include "util.h"
+#include <QGSettings>
 
 struct GSettingsSchemaQmlPrivate
 {
@@ -30,7 +28,7 @@ struct GSettingsSchemaQmlPrivate
 struct GSettingsQmlPrivate
 {
     GSettingsSchemaQml *schema;
-    GSettings *settings;
+    QGSettings *settings;
 };
 
 GSettingsSchemaQml::GSettingsSchemaQml(QObject *parent): QObject(parent)
@@ -73,45 +71,17 @@ void GSettingsSchemaQml::setPath(const QByteArray &path)
     priv->path = path;
 }
 
-QVariantList GSettingsSchemaQml::choices(const QByteArray &qkey) const
+QVariantList GSettingsSchemaQml::choices(const QByteArray &key) const
 {
     GSettingsQml *parent = (GSettingsQml *) this->parent();
-    gchar *key;
-    GVariant *range;
-    const gchar *type;
-    GVariant *value;
-    QVariantList choices;
+
+    if (!parent->contains(key))
+        return QVariantList();
 
     if (parent->priv->settings == NULL)
-        return choices;
+        return QVariantList();
 
-    if (!parent->contains(qkey))
-        return choices;
-
-    key = unqtify_name (qkey);
-    range = g_settings_get_range (parent->priv->settings, key);
-    g_free (key);
-
-    if (range == NULL)
-        return choices;
-
-    g_variant_get (range, "(&sv)", &type, &value);
-
-    if (g_str_equal (type, "enum")) {
-        GVariantIter iter;
-        GVariant *child;
-
-        g_variant_iter_init (&iter, value);
-        while ((child = g_variant_iter_next_value (&iter))) {
-            choices.append(qconf_types_to_qvariant(child));
-            g_variant_unref (child);
-        }
-    }
-
-    g_variant_unref (value);
-    g_variant_unref (range);
-
-    return choices;
+    return parent->priv->settings->choices(key);
 }
 
 GSettingsQml::GSettingsQml(QObject *parent): QQmlPropertyMap(this, parent)
@@ -123,9 +93,6 @@ GSettingsQml::GSettingsQml(QObject *parent): QQmlPropertyMap(this, parent)
 
 GSettingsQml::~GSettingsQml()
 {
-    if (priv->settings)
-        g_object_unref (priv->settings);
-
     delete priv;
 }
 
@@ -134,73 +101,31 @@ GSettingsSchemaQml * GSettingsQml::schema() const
     return priv->schema;
 }
 
-void GSettingsQml::updateKey(const gchar *gkey, bool emitChanged)
-{
-    QString qkey;
-    GVariant *value;
-    QVariant qvalue;
-
-    qkey = qtify_name(gkey);
-    value = g_settings_get_value(priv->settings, gkey);
-    qvalue = qconf_types_to_qvariant(value);
-    this->insert(qkey, qvalue);
-
-    if (emitChanged)
-        Q_EMIT (changed (qkey, qvalue));
-
-    g_variant_unref(value);
-}
-
 void GSettingsQml::classBegin()
 {
 }
 
-static void settings_key_changed(GSettings *, const gchar *key, gpointer user_data)
-{
-    GSettingsQml *self = (GSettingsQml *)user_data;
-
-    self->updateKey(key, true);
-}
-
 void GSettingsQml::componentComplete()
 {
-    gchar **keys;
-    gint i;
+    priv->settings = new QGSettings(priv->schema->id(), priv->schema->path(), this);
 
-    if (priv->schema->path().isEmpty())
-        priv->settings = g_settings_new(priv->schema->id().constData());
-    else
-        priv->settings = g_settings_new_with_path(priv->schema->id().constData(), priv->schema->path().constData());
+    connect(priv->settings, SIGNAL(changed(const QString &)), this, SLOT(settingChanged(const QString &)));
 
-    g_signal_connect(priv->settings, "changed", G_CALLBACK(settings_key_changed), this);
-
-    keys = g_settings_list_keys(priv->settings);
-    for (i = 0; keys[i]; i++)
-        this->updateKey(keys[i], false);
-    g_strfreev(keys);
+    Q_FOREACH(QString key, priv->settings->keys())
+        this->insert(key, priv->settings->get(key));
 
     Q_EMIT(schemaChanged());
 }
 
+void GSettingsQml::settingChanged(const QString &key)
+{
+    Q_EMIT(changed(key, priv->settings->get(key)));
+}
+
 QVariant GSettingsQml::updateValue(const QString& key, const QVariant &value)
 {
-    GVariant *cur;
-    GVariant *new_value;
-    gchar *gkey;
+    if (priv->settings)
+        priv->settings->set(key, value);
 
-    if (priv->settings == NULL)
-        return value;
-
-    gkey = unqtify_name(key);
-
-    /* fetch current value to find out the exact type */
-    cur = g_settings_get_value(priv->settings, gkey);
-
-    new_value = qconf_types_collect_from_variant(g_variant_get_type (cur), value);
-    if (new_value)
-        g_settings_set_value(priv->settings, gkey, new_value);
-
-    g_free(gkey);
-    g_variant_unref (cur);
     return value;
 }
