@@ -20,6 +20,7 @@ TestCase {
     compare(settings.testDouble, 1.5);
     compare(settings.testBoolean, false);
     compare(settings.testString, 'hello');
+    compare(settings.testStringList, ['one', 'two', 'three']);
   }
 
   function test_write() {
@@ -31,6 +32,13 @@ TestCase {
     compare(settings.testBoolean, true);
     settings.testString = 'bye';
     compare(settings.testString, 'bye');
+
+    settings.testStringList = ['four', 'five']
+    compare(settings.testStringList, ['four', 'five']);
+    settings.testStringList = ['six']
+    compare(settings.testStringList, ['six']);
+    settings.testStringList = [];
+    compare(settings.testStringList, []);
   }
 
   function test_changed() {

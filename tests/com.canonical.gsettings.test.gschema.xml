@@ -21,5 +21,8 @@
       </choices>
       <default>'one'</default>
     </key>
+    <key name="test-string-list" type="as">
+      <default>['one', 'two', 'three']</default>
+    </key>
   </schema>
 </schemalist>

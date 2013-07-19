@@ -334,7 +334,7 @@ GVariant *qconf_types_collect_from_variant(const GVariantType *gtype, const QVar
             const QStringList list = v.toStringList();
             GVariantBuilder builder;
 
-            g_variant_builder_init(&builder, G_VARIANT_TYPE_ARRAY);
+            g_variant_builder_init(&builder, G_VARIANT_TYPE_STRING_ARRAY);
 
             Q_FOREACH (const QString& string, list)
               g_variant_builder_add(&builder, "s", string.toUtf8().constData());
