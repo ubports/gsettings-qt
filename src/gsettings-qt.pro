@@ -12,6 +12,6 @@ SOURCES = qgsettings.cpp util.cpp qconftypes.cpp
 target.path = $$[QT_INSTALL_LIBS]
 INSTALLS += target
 
-headers.path = $$[QT_INSTALL_HEADERS]
+headers.path = $$[QT_INSTALL_HEADERS]/QGSettings
 headers.files = qgsettings.h QGSettings
 INSTALLS += headers
