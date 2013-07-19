@@ -5,16 +5,13 @@ import GSettings 1.0
 TestCase {
   id: testCase
 
-  property string changedKey
-  property string changedValue
+  property var changes: []
 
   GSettings {
     id: settings
     schema.id: "com.canonical.gsettings.Test"
-    onChanged: {
-        changedKey = key
-        changedValue = value
-    }
+
+    onChanged: changes.push([key, value]);
   }
 
   // this test must run first (others overwrite keys), hence the 'aaa'
@@ -37,10 +34,13 @@ TestCase {
   }
 
   function test_changed() {
-    settings["testString"] = "goodbye";
+    changes = []
 
-    compare(testCase.changedKey, "testString", "changedKey not correct");
-    compare(testCase.changedValue, "goodbye", "changedValue not correct");
+    settings.testInteger = 4;
+    settings.testDouble = 3.14
+    settings.testString = 'goodbye';
+
+    compare(changes, [['testInteger', 4], ['testDouble', 3.14], ['testString', 'goodbye']]);
   }
 
   function test_choices() {
