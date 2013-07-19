@@ -5,39 +5,50 @@ import GSettings 1.0
 TestCase {
   id: testCase
 
-  property string changedKey
-  property string changedValue
+  property var changes: []
 
   GSettings {
     id: settings
     schema.id: "com.canonical.gsettings.Test"
-    onChanged: {
-        changedKey = key
-        changedValue = value
-    }
+
+    onChanged: changes.push([key, value]);
   }
 
-  function readWriteKey(key, expectedValue, newValue) {
-    compare(settings[key], expectedValue, "read " + key);
-    settings[key] = newValue;
-    compare(settings[key], newValue, "write " + key);
+  // this test must run first (others overwrite keys), hence the 'aaa'
+  function test_aaa_read_defaults() {
+    compare(settings.testInteger, 42);
+    compare(settings.testDouble, 1.5);
+    compare(settings.testBoolean, false);
+    compare(settings.testString, 'hello');
+    compare(settings.testStringList, ['one', 'two', 'three']);
   }
 
-  function test_types() {
-    readWriteKey("testInteger", 42, 2);
-    readWriteKey("testDouble", 1.5, 2.5);
-    readWriteKey("testBoolean", false, true);
-    readWriteKey("testString", "hello", "bye");
+  function test_write() {
+    settings.testInteger = 2;
+    compare(settings.testInteger, 2);
+    settings.testDouble = 2.5;
+    compare(settings.testDouble, 2.5);
+    settings.testBoolean = true;
+    compare(settings.testBoolean, true);
+    settings.testString = 'bye';
+    compare(settings.testString, 'bye');
+
+    settings.testStringList = ['four', 'five']
+    compare(settings.testStringList, ['four', 'five']);
+    settings.testStringList = ['six']
+    compare(settings.testStringList, ['six']);
+    settings.testStringList = [];
+    compare(settings.testStringList, []);
   }
 
   function test_changed() {
-    settings["testString"] = "goodbye";
+    changes = []
 
-    compare(testCase.changedKey, "testString", "changedKey not correct");
-    compare(testCase.changedValue, "goodbye", "changedValue not correct");
+    settings.testInteger = 4;
+    settings.testDouble = 3.14
+    settings.testString = 'goodbye';
 
-    // Clean up for test_types()
-    settings["testString"] = "hello";
+    compare(changes, [['testInteger', 4], ['testDouble', 3.14], ['testString', 'goodbye']]);
   }
 
   function test_choices() {
