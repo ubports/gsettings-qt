@@ -17,17 +17,23 @@ TestCase {
     }
   }
 
-  function readWriteKey(key, expectedValue, newValue) {
-    compare(settings[key], expectedValue, "read " + key);
-    settings[key] = newValue;
-    compare(settings[key], newValue, "write " + key);
+  // this test must run first (others overwrite keys), hence the 'aaa'
+  function test_aaa_read_defaults() {
+    compare(settings.testInteger, 42);
+    compare(settings.testDouble, 1.5);
+    compare(settings.testBoolean, false);
+    compare(settings.testString, 'hello');
   }
 
-  function test_types() {
-    readWriteKey("testInteger", 42, 2);
-    readWriteKey("testDouble", 1.5, 2.5);
-    readWriteKey("testBoolean", false, true);
-    readWriteKey("testString", "hello", "bye");
+  function test_write() {
+    settings.testInteger = 2;
+    compare(settings.testInteger, 2);
+    settings.testDouble = 2.5;
+    compare(settings.testDouble, 2.5);
+    settings.testBoolean = true;
+    compare(settings.testBoolean, true);
+    settings.testString = 'bye';
+    compare(settings.testString, 'bye');
   }
 
   function test_changed() {
@@ -35,9 +41,6 @@ TestCase {
 
     compare(testCase.changedKey, "testString", "changedKey not correct");
     compare(testCase.changedValue, "goodbye", "changedValue not correct");
-
-    // Clean up for test_types()
-    settings["testString"] = "hello";
   }
 
   function test_choices() {
