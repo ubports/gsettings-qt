@@ -44,4 +44,9 @@ TestCase {
     compare(settings.schema.choices('testEnum'), ['one', 'two', 'three']);
     compare(settings.schema.choices('testInteger'), []);
   }
+
+  function test_non_existing() {
+    compare(settings.schema.aKeyThatsNotInTheSchema, undefined);
+    compare(settings.schema.choices('aKeyThatsNotInTheSchema'), []);
+  }
 }

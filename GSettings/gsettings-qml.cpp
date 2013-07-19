@@ -85,6 +85,9 @@ QVariantList GSettingsSchemaQml::choices(const QByteArray &qkey) const
     if (parent->priv->settings == NULL)
         return choices;
 
+    if (!parent->contains(qkey))
+        return choices;
+
     key = unqtify_name (qkey);
     range = g_settings_get_range (parent->priv->settings, key);
     g_free (key);
