@@ -1,3 +1,15 @@
+gsettings-qt (0.0+13.10.20130720-0ubuntu1) saucy; urgency=low
+
+  [ Lars Uebernickel ]
+  * Don't abort when calling schema.choices() for an unknown key. Also
+    adds a test for accessing an unknown key from the settings object.
+  * Clean up tests and add some more testing.
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 26
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Sat, 20 Jul 2013 07:01:48 +0000
+
 gsettings-qt (0.0+13.10.20130717-0ubuntu1) saucy; urgency=low
 
   [ Lars Uebernickel ]
