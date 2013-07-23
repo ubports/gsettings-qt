@@ -1,14 +1,15 @@
 TEMPLATE = lib
-INCLUDEPATH += .
 QT += qml
 QT -= gui
 CONFIG += qt plugin no_keywords link_pkgconfig
 PKGCONFIG += gio-2.0
+INCLUDEPATH += ../src .
+LIBS += -L../src -lgsettings-qt
 
 TARGET = GSettingsQmlPlugin
 
-HEADERS = plugin.h gsettings-qml.h qconftypes.h util.h
-SOURCES = plugin.cpp gsettings-qml.cpp qconftypes.cpp util.cpp
+HEADERS = plugin.h gsettings-qml.h
+SOURCES = plugin.cpp gsettings-qml.cpp
 
 uri = GSettings
 

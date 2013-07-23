@@ -62,6 +62,9 @@ Q_SIGNALS:
     void schemaChanged();
     void changed (const QString &key, const QVariant &value);
 
+private Q_SLOTS:
+    void settingChanged(const QString &key);
+
 private:
     struct GSettingsQmlPrivate *priv;
 
