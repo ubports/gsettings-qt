@@ -75,10 +75,10 @@ QVariantList GSettingsSchemaQml::choices(const QByteArray &key) const
 {
     GSettingsQml *parent = (GSettingsQml *) this->parent();
 
-    if (!parent->contains(key))
+    if (parent->priv->settings == NULL)
         return QVariantList();
 
-    if (parent->priv->settings == NULL)
+    if (!parent->contains(key))
         return QVariantList();
 
     return parent->priv->settings->choices(key);
