@@ -61,12 +61,12 @@ QGSettings::~QGSettings()
 
 QVariant QGSettings::get(const QString &key) const
 {
-  gchar *gkey = unqtify_name(key);
-  GVariant *value = g_settings_get_value(priv->settings, gkey);
-  QVariant qvalue = qconf_types_to_qvariant(value);
-  g_variant_unref(value);
-  g_free(gkey);
-  return qvalue;
+    gchar *gkey = unqtify_name(key);
+    GVariant *value = g_settings_get_value(priv->settings, gkey);
+    QVariant qvalue = qconf_types_to_qvariant(value);
+    g_variant_unref(value);
+    g_free(gkey);
+    return qvalue;
 }
 
 void QGSettings::set(const QString &key, const QVariant &value)
