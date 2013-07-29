@@ -119,7 +119,9 @@ void GSettingsQml::componentComplete()
 
 void GSettingsQml::settingChanged(const QString &key)
 {
-    Q_EMIT(changed(key, priv->settings->get(key)));
+    QVariant value = priv->settings->get(key);
+    this->insert(key, value);
+    Q_EMIT(changed(key, value));
 }
 
 QVariant GSettingsQml::updateValue(const QString& key, const QVariant &value)
