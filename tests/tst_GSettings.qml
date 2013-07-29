@@ -1,6 +1,7 @@
 
 import QtTest 1.0
 import GSettings 1.0
+import QtQuick 2.0
 
 TestCase {
   id: testCase
@@ -14,6 +15,8 @@ TestCase {
     onChanged: changes.push([key, value]);
   }
 
+  property string bindingTest: settings.testString
+
   // this test must run first (others overwrite keys), hence the 'aaa'
   function test_aaa_read_defaults() {
     compare(settings.testInteger, 42);
@@ -21,6 +24,8 @@ TestCase {
     compare(settings.testBoolean, false);
     compare(settings.testString, 'hello');
     compare(settings.testStringList, ['one', 'two', 'three']);
+
+    compare(testCase.bindingTest, 'hello');
   }
 
   function test_write() {
@@ -32,6 +37,7 @@ TestCase {
     compare(settings.testBoolean, true);
     settings.testString = 'bye';
     compare(settings.testString, 'bye');
+    compare(testCase.bindingTest, 'bye');
 
     settings.testStringList = ['four', 'five']
     compare(settings.testStringList, ['four', 'five']);
