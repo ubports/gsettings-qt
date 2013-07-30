@@ -1,3 +1,14 @@
+gsettings-qt (0.0+13.10.20130730-0ubuntu1) saucy; urgency=low
+
+  [ Lars Uebernickel ]
+  * Fix regression: GSettingsQml didn't update values on change. (LP:
+    #1206181)
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 30
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Tue, 30 Jul 2013 07:01:52 +0000
+
 gsettings-qt (0.0+13.10.20130725-0ubuntu1) saucy; urgency=low
 
   [ Sebastien Bacher ]
