@@ -1,3 +1,13 @@
+gsettings-qt (0.0+13.10.20130730.1-0ubuntu1) saucy; urgency=low
+
+  [ Sebastien Bacher ]
+  * build a .qmltypes, so qtcreator knows about GSettings.
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 32
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Tue, 30 Jul 2013 18:08:14 +0000
+
 gsettings-qt (0.0+13.10.20130730-0ubuntu1) saucy; urgency=low
 
   [ Lars Uebernickel ]
