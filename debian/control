@@ -44,6 +44,7 @@ Architecture: any
 Pre-Depends: dpkg (>= 1.15.6~)
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libgsettings-qt1 (= ${binary:Version}),
 Description: Library to access GSettings from Qt - devel
  Library to access GSettings from Qt
  .
