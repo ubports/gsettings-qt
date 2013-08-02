@@ -1,3 +1,13 @@
+gsettings-qt (0.0+13.10.20130802-0ubuntu1) saucy; urgency=low
+
+  [ Sebastien Bacher ]
+  * let the dev binary depends on the library.
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 34
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Fri, 02 Aug 2013 20:16:44 +0000
+
 gsettings-qt (0.0+13.10.20130730.1-0ubuntu1) saucy; urgency=low
 
   [ Sebastien Bacher ]
