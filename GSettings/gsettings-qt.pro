@@ -12,9 +12,10 @@ HEADERS = plugin.h gsettings-qml.h
 SOURCES = plugin.cpp gsettings-qml.cpp
 
 uri = GSettings
+API_VER = 1.0
 
 # deployment rules for the plugin
-installPath = $$[QT_INSTALL_QML]/$$replace(uri, \\., /)
+installPath = $$[QT_INSTALL_QML]/$$replace(uri, \\., /).$$API_VER
 target.path = $$installPath
 INSTALLS += target
 
