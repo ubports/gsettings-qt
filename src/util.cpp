@@ -54,11 +54,13 @@ QString qtify_name(const char *name)
 gchar * unqtify_name(const QString &name)
 {
     const gchar *p;
+    QByteArray bytes;
     GString *str;
 
-    str = g_string_new_len (NULL, name.size() + 5);
+    bytes = name.toUtf8();
+    str = g_string_new (NULL);
 
-    for (p = name.toUtf8().constData(); *p; p++) {
+    for (p = bytes.constData(); *p; p++) {
         if (isupper(*p)) {
             g_string_append_c (str, '-');
             g_string_append_c (str, tolower(*p));
