@@ -1,3 +1,19 @@
+gsettings-qt (0.0+13.10.20130807-0ubuntu1) saucy; urgency=low
+
+  [ Ken VanDine ]
+  * Install QML module in a versioned dir so it is really parallel
+    installable .
+
+  [ Lars Uebernickel ]
+  * Fix crash in unqtify_name For one, stop using g_string_new_len(),
+    which creates a string with a given length, not allocation. Also,
+    make sure the QByteArray stays around for the duration of the loop.
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 37
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Wed, 07 Aug 2013 07:02:05 +0000
+
 gsettings-qt (0.0+13.10.20130802-0ubuntu1) saucy; urgency=low
 
   [ Sebastien Bacher ]
