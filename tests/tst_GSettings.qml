@@ -66,4 +66,10 @@ TestCase {
     compare(settings.schema.aKeyThatsNotInTheSchema, undefined);
     compare(settings.schema.choices('aKeyThatsNotInTheSchema'), []);
   }
+
+  function test_reset() {
+    settings.testInteger = 4;
+    settings.schema.reset('testInteger');
+    compare(settings.testInteger, 42);
+  }
 }

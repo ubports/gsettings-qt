@@ -125,3 +125,10 @@ QVariantList QGSettings::choices(const QString &qkey) const
 
     return choices;
 }
+
+void QGSettings::reset(const QString &qkey)
+{
+    gchar *key = unqtify_name(qkey);
+    g_settings_reset(priv->settings, key);
+    g_free(key);
+}
