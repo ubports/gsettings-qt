@@ -36,6 +36,7 @@ public:
     void setPath(const QByteArray &path);
 
     Q_INVOKABLE QVariantList choices(const QByteArray &key) const;
+    Q_INVOKABLE void reset(const QByteArray &key);
 
 private:
     struct GSettingsSchemaQmlPrivate *priv;

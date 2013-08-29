@@ -79,6 +79,11 @@ public:
      */
     QVariantList choices(const QString &key) const;
 
+    /**
+     * @brief Resets the setting for @key to its default value.
+     */
+    void reset(const QString &key);
+
 Q_SIGNALS:
     /**
      * \brief Emitted when the value associated with key has changed

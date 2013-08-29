@@ -1,6 +1,6 @@
 
 import QtTest 1.0
-import GSettings 1.0
+import "../GSettings" 1.0
 import QtQuick 2.0
 
 TestCase {
@@ -65,5 +65,11 @@ TestCase {
   function test_non_existing() {
     compare(settings.schema.aKeyThatsNotInTheSchema, undefined);
     compare(settings.schema.choices('aKeyThatsNotInTheSchema'), []);
+  }
+
+  function test_reset() {
+    settings.testInteger = 4;
+    settings.schema.reset('testInteger');
+    compare(settings.testInteger, 42);
   }
 }

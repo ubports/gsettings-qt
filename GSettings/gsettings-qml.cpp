@@ -84,6 +84,14 @@ QVariantList GSettingsSchemaQml::choices(const QByteArray &key) const
     return parent->priv->settings->choices(key);
 }
 
+void GSettingsSchemaQml::reset(const QByteArray &key)
+{
+    GSettingsQml *parent = (GSettingsQml *) this->parent();
+
+    if (parent->priv->settings != NULL)
+        parent->priv->settings->reset(key);
+}
+
 GSettingsQml::GSettingsQml(QObject *parent): QQmlPropertyMap(this, parent)
 {
     priv = new GSettingsQmlPrivate;
