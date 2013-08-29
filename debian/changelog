@@ -1,3 +1,13 @@
+gsettings-qt (0.0+13.10.20130829-0ubuntu1) saucy; urgency=low
+
+  [ Lars Uebernickel ]
+  * Add API to reset a key to its default value. (LP: #1218005)
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 39
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Thu, 29 Aug 2013 12:29:45 +0000
+
 gsettings-qt (0.0+13.10.20130807-0ubuntu1) saucy; urgency=low
 
   [ Ken VanDine ]
