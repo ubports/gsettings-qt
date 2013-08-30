@@ -134,8 +134,14 @@ void GSettingsQml::settingChanged(const QString &key)
 
 QVariant GSettingsQml::updateValue(const QString& key, const QVariant &value)
 {
-    if (priv->settings)
-        priv->settings->set(key, value);
+    if (priv->settings == NULL)
+        return QVariant();
 
-    return value;
+    if (priv->settings->trySet(key, value)) {
+        return value;
+    }
+    else {
+        qWarning("unable to set key '%s' to value '%s'", key.toUtf8().constData(), value.toString().toUtf8().constData());
+        return priv->settings->get(key);
+    }
 }

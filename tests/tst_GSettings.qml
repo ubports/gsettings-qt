@@ -45,6 +45,13 @@ TestCase {
     compare(settings.testStringList, ['six']);
     settings.testStringList = [];
     compare(settings.testStringList, []);
+
+    settings.testEnum = 'two';
+    compare(settings.testEnum, 'two');
+
+    // test whether writing an out-of-range key doesn't work
+    settings.testEnum = 'notanumber';
+    compare(settings.testEnum, 'two');
   }
 
   function test_changed() {

@@ -71,17 +71,26 @@ QVariant QGSettings::get(const QString &key) const
 
 void QGSettings::set(const QString &key, const QVariant &value)
 {
+    if (!this->trySet(key, value))
+        qWarning("unable to set key '%s' to value '%s'", key.toUtf8().constData(), value.toString().toUtf8().constData());
+}
+
+bool QGSettings::trySet(const QString &key, const QVariant &value)
+{
     gchar *gkey = unqtify_name(key);
+    bool success = false;
 
     /* fetch current value to find out the exact type */
     GVariant *cur = g_settings_get_value(priv->settings, gkey);
 
     GVariant *new_value = qconf_types_collect_from_variant(g_variant_get_type (cur), value);
     if (new_value)
-        g_settings_set_value(priv->settings, gkey, new_value);
+        success = g_settings_set_value(priv->settings, gkey, new_value);
 
     g_free(gkey);
     g_variant_unref (cur);
+
+    return success;
 }
 
 QStringList QGSettings::keys() const

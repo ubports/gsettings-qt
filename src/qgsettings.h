@@ -67,6 +67,18 @@ public:
     void set(const QString &key, const QVariant &value);
 
     /**
+     * @brief Sets the value at key to value
+     * @key The key for which to set the value
+     * @value The value to set
+     *
+     * Behaves just like ::set(key, value), but returns false instead of
+     * printing a warning if the key couldn't be set.
+     *
+     * @return whether the key was set
+     */
+    bool trySet(const QString &key, const QVariant &value);
+
+    /**
      * \brief Retrieves the list of avaliable keys
      */
     QStringList keys() const;
