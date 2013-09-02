@@ -1,3 +1,15 @@
+gsettings-qt (0.0+13.10.20130902.1-0ubuntu1) saucy; urgency=low
+
+  [ Lars Uebernickel ]
+  * Don't write values into the QQmlPropertyMap when the write failed
+    This makes sure that the property map doesn't get out of sync with
+    the gsettings database.
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 41
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Mon, 02 Sep 2013 06:12:44 +0000
+
 gsettings-qt (0.0+13.10.20130829-0ubuntu1) saucy; urgency=low
 
   [ Lars Uebernickel ]
