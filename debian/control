@@ -23,6 +23,7 @@ Vcs-Bzr: https://code.launchpad.net/~system-settings-touch/gsettings-qt/trunk
 Package: qtdeclarative5-gsettings1.0
 Section: libs
 Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: QML Bindings for GSettings
@@ -42,8 +43,7 @@ Package: libgsettings-qt-dev
 Section: libdevel
 Architecture: any
 Pre-Depends: dpkg (>= 1.15.6~)
-Depends: ${shlibs:Depends},
-         ${misc:Depends},
+Depends: ${misc:Depends},
          libgsettings-qt1 (= ${binary:Version}),
 Description: Library to access GSettings from Qt - devel
  Library to access GSettings from Qt
