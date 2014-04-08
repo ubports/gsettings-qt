@@ -15,10 +15,17 @@ TestCase {
     onChanged: changes.push([key, value]);
   }
 
+  GSettings {
+    id: invalid_settings
+
+    schema.id: "com.canonical.gsettings.NonExisting"
+  }
+
   property string bindingTest: settings.testString
 
   // this test must run first (others overwrite keys), hence the 'aaa'
   function test_aaa_read_defaults() {
+    compare(settings.schema.isValid, true);
     compare(settings.testInteger, 42);
     compare(settings.testDouble, 1.5);
     compare(settings.testBoolean, false);
@@ -78,5 +85,10 @@ TestCase {
     settings.testInteger = 4;
     settings.schema.reset('testInteger');
     compare(settings.testInteger, 42);
+  }
+
+  function test_invalid_schema() {
+    compare(invalid_settings.schema.isValid, false);
+    compare(invalid_settings.schema.testInteger, undefined);
   }
 }

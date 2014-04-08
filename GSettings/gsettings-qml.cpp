@@ -23,6 +23,9 @@ struct GSettingsSchemaQmlPrivate
 {
     QByteArray id;
     QByteArray path;
+    bool isValid;
+
+    GSettingsSchemaQmlPrivate() : isValid(false) {}
 };
 
 struct GSettingsQmlPrivate
@@ -71,6 +74,19 @@ void GSettingsSchemaQml::setPath(const QByteArray &path)
     priv->path = path;
 }
 
+bool GSettingsSchemaQml::isValid() const
+{
+    return priv->isValid;
+}
+
+void GSettingsSchemaQml::setIsValid(bool valid)
+{
+    if (valid != priv->isValid) {
+        priv->isValid = valid;
+        Q_EMIT isValidChanged();
+    }
+}
+
 QVariantList GSettingsSchemaQml::choices(const QByteArray &key) const
 {
     GSettingsQml *parent = (GSettingsQml *) this->parent();
@@ -115,14 +131,19 @@ void GSettingsQml::classBegin()
 
 void GSettingsQml::componentComplete()
 {
-    priv->settings = new QGSettings(priv->schema->id(), priv->schema->path(), this);
+    bool schemaValid = QGSettings::isSchemaInstalled(priv->schema->id());
+    if (schemaValid) {
+        priv->settings = new QGSettings(priv->schema->id(), priv->schema->path(), this);
 
-    connect(priv->settings, SIGNAL(changed(const QString &)), this, SLOT(settingChanged(const QString &)));
+        connect(priv->settings, SIGNAL(changed(const QString &)), this, SLOT(settingChanged(const QString &)));
 
-    Q_FOREACH(QString key, priv->settings->keys())
-        this->insert(key, priv->settings->get(key));
+        Q_FOREACH(QString key, priv->settings->keys())
+            this->insert(key, priv->settings->get(key));
 
-    Q_EMIT(schemaChanged());
+        Q_EMIT(schemaChanged());
+    }
+    // emit isValid notification only once everything is setup
+    priv->schema->setIsValid(schemaValid);
 }
 
 void GSettingsQml::settingChanged(const QString &key)

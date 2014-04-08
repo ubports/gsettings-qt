@@ -141,3 +141,15 @@ void QGSettings::reset(const QString &qkey)
     g_settings_reset(priv->settings, key);
     g_free(key);
 }
+
+bool QGSettings::isSchemaInstalled(const QByteArray &schema_id)
+{
+    GSettingsSchemaSource *source = g_settings_schema_source_get_default ();
+    GSettingsSchema *schema = g_settings_schema_source_lookup (source, schema_id.constData(), TRUE);
+    if (schema) {
+        g_object_unref (schema);
+        return true;
+    } else {
+        return false;
+    }
+}

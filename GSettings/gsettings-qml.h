@@ -22,8 +22,9 @@
 class GSettingsSchemaQml: public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QByteArray id   READ id   WRITE setId)
-    Q_PROPERTY(QByteArray path READ path WRITE setPath)
+    Q_PROPERTY(QByteArray id      READ id      WRITE setId)
+    Q_PROPERTY(QByteArray path    READ path    WRITE setPath)
+    Q_PROPERTY(bool       isValid READ isValid NOTIFY isValidChanged)
 
 public:
     GSettingsSchemaQml(QObject *parent = NULL);
@@ -35,8 +36,14 @@ public:
     QByteArray path() const;
     void setPath(const QByteArray &path);
 
+    bool isValid() const;
+    void setIsValid(bool valid);
+
     Q_INVOKABLE QVariantList choices(const QByteArray &key) const;
     Q_INVOKABLE void reset(const QByteArray &key);
+
+Q_SIGNALS:
+    void isValidChanged();
 
 private:
     struct GSettingsSchemaQmlPrivate *priv;
