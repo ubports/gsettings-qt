@@ -96,6 +96,11 @@ public:
      */
     void reset(const QString &key);
 
+    /**
+     * @brief Checks if a schema with the given id is installed.
+     */
+    static bool isSchemaInstalled(const QByteArray &schema_id);
+
 Q_SIGNALS:
     /**
      * \brief Emitted when the value associated with key has changed
