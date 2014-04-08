@@ -1,3 +1,9 @@
+gsettings-qt (0.1-0ubuntu1) UNRELEASED; urgency=medium
+
+  * Added API to check if a schema is installed
+
+ -- Michal Hruby <michal.hruby@canonical.com>  Tue, 08 Apr 2014 10:30:43 +0100
+
 gsettings-qt (0.0+13.10.20130902.1-0ubuntu2) trusty; urgency=medium
 
   * Rebuild against Qt 5.2.1
