@@ -1,3 +1,11 @@
+gsettings-qt (0.1+14.10.20140520-0ubuntu1) utopic; urgency=low
+
+  [ Iain Lane ]
+  * Add a symbols file so that the qtdeclarative module (and other
+    rdeps) get correctly versioned dependencies (LP: #1304611)
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Tue, 20 May 2014 18:39:37 +0000
+
 gsettings-qt (0.1+14.10.20140501-0ubuntu1) utopic; urgency=low
 
   [ Michal Hruby ]
