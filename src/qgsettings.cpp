@@ -55,7 +55,7 @@ QGSettings::QGSettings(const QByteArray &schema_id, const QByteArray &path, QObj
 
 QGSettings::~QGSettings()
 {
-    g_settings_sync (priv->settings);
+    g_settings_sync ();
     g_object_unref (priv->settings);
     delete priv;
 }
