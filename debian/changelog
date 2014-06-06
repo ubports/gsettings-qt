@@ -1,3 +1,11 @@
+gsettings-qt (0.1+14.10.20140606-0ubuntu1) utopic; urgency=low
+
+  [ Lars Uebernickel ]
+  * Sync settings in destructor To ensure that settings are saved to
+    disc when an app exits.
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Fri, 06 Jun 2014 14:31:00 +0000
+
 gsettings-qt (0.1+14.10.20140520-0ubuntu1) utopic; urgency=low
 
   [ Iain Lane ]
