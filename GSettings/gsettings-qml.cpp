@@ -149,8 +149,10 @@ void GSettingsQml::componentComplete()
 void GSettingsQml::settingChanged(const QString &key)
 {
     QVariant value = priv->settings->get(key);
-    this->insert(key, value);
-    Q_EMIT(changed(key, value));
+    if (this->value(key) != value) {
+        this->insert(key, value);
+        Q_EMIT(changed(key, value));
+    }
 }
 
 QVariant GSettingsQml::updateValue(const QString& key, const QVariant &value)
