@@ -1,3 +1,14 @@
+gsettings-qt (0.1+14.10.20140624-0ubuntu1) utopic; urgency=low
+
+  [ Lars Uebernickel ]
+  * Stop using deprecated g_settings_get_range()
+  * qml: only emit changed when the value has actually changed This
+    cannot be done for the c++ class, because that would involve a
+    round-trip to the dconf database. The QML component already caches
+    all values because of the way QQmlPropertyMap works. (LP: #1330365)
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Tue, 24 Jun 2014 10:01:54 +0000
+
 gsettings-qt (0.1+14.10.20140607-0ubuntu1) utopic; urgency=low
 
   * New rebuild forced
