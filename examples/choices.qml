@@ -15,10 +15,8 @@ Item {
     anchors.fill: parent
     model: settings.schema.choices('toolbarStyle')
 
-    delegate {
-      Text {
-        text: modelData
-      }
+    delegate: Text {
+      text: modelData
     }
   }
 }

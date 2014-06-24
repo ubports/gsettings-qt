@@ -27,6 +27,7 @@ struct QGSettingsPrivate
     QByteArray schema_id;
     QByteArray path;
     GSettings *settings;
+    GSettingsSchema *schema;
 
     static void settingChanged(GSettings *settings, const gchar *key, gpointer user_data);
 };
@@ -50,13 +51,17 @@ QGSettings::QGSettings(const QByteArray &schema_id, const QByteArray &path, QObj
     else
         priv->settings = g_settings_new_with_path(priv->schema_id.constData(), priv->path.constData());
 
+    g_object_get (priv->settings, "settings-schema", &priv->schema, NULL);
     g_signal_connect(priv->settings, "changed", G_CALLBACK(QGSettingsPrivate::settingChanged), this);
 }
 
 QGSettings::~QGSettings()
 {
-    g_settings_sync ();
-    g_object_unref (priv->settings);
+    if (priv->schema) {
+        g_settings_sync ();
+        g_object_unref (priv->settings);
+        g_settings_schema_unref (priv->schema);
+    }
     delete priv;
 }
 
@@ -108,7 +113,9 @@ QStringList QGSettings::keys() const
 QVariantList QGSettings::choices(const QString &qkey) const
 {
     gchar *key = unqtify_name (qkey);
-    GVariant *range = g_settings_get_range(priv->settings, key);
+    GSettingsSchemaKey *schema_key = g_settings_schema_get_key (priv->schema, key);
+    GVariant *range = g_settings_schema_key_get_range(schema_key);
+    g_settings_schema_key_unref (schema_key);
     g_free(key);
 
     if (range == NULL)
