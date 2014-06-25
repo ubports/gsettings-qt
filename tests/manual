@@ -1,0 +1,15 @@
+
+Test-case gsettings-qt/unity8-check-setting
+<dl>
+  <dt>Open system settings with the security panel </dt>
+    <dd>Ensure "Dash search" is set to "Phone and Internet"</dd>
+  <dt>Change "Dash search" to "Phone only"</dt>
+    <dd>Ensure that the music and video lenses don't show online content</dd>
+</dl>
+
+Test-case gsettings-qt/run-example
+<dl>
+  <dt>Download the <a href="http://bazaar.launchpad.net/~system-settings-touch/gsettings-qt/trunk/view/head:/examples/choices.qml">choices example</a> and run it with qmlscene</dt>
+    <dd>Ensure that the switch is synchronized with the "Dash Search" setting in the security panel of system settings</dd>
+    <dd>Ensure that the "Possible values" list item has a value of "all, none"</dd>
+</dl>
