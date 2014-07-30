@@ -53,6 +53,7 @@
  *  string             s         QString                QVariant::String
  *  string array*      as        QStringList            QVariant::StringList
  *  byte array         ay        QByteArray             QVariant::ByteArray
+ *  dictionary         a{ss}     QVariantMap            QVariant::Map
  *
  * [*] not strictly an array, but called as such for sake of
  *     consistency with the 'a' appearing in the DBus type system
@@ -106,6 +107,9 @@ QVariant::Type qconf_types_convert(const GVariantType *gtype)
         else if (g_variant_type_equal(gtype, G_VARIANT_TYPE_BYTESTRING))
             return QVariant::ByteArray;
 
+        else if (g_variant_type_equal(gtype, G_VARIANT_TYPE ("a{ss}")))
+            return QVariant::Map;
+
         // fall through
     default:
         return QVariant::Invalid;
@@ -158,6 +162,17 @@ QVariant qconf_types_to_qvariant(GVariant *value)
             return QVariant(list);
         } else if (g_variant_is_of_type(value, G_VARIANT_TYPE_BYTESTRING)) {
             return QVariant(QByteArray(g_variant_get_bytestring(value)));
+        } else if (g_variant_is_of_type(value, G_VARIANT_TYPE("a{ss}"))) {
+            GVariantIter iter;
+            QMap<QString, QVariant> map;
+            const gchar *key; 
+            const gchar *val;
+
+            g_variant_iter_init (&iter, value);
+            while (g_variant_iter_next (&iter, "{&s&s}", &key, &val))
+                map.insert(key, QVariant(val));
+
+            return map;
         }
 
         // fall through
@@ -219,6 +234,17 @@ GVariant *qconf_types_collect_from_variant(const GVariantType *gtype, const QVar
 
             return g_variant_new_from_data(G_VARIANT_TYPE_BYTESTRING,
                                            data, size, TRUE, g_free, data);
+        } else if (g_variant_type_equal(gtype, G_VARIANT_TYPE("a{ss}"))) {
+            GVariantBuilder builder;
+            g_variant_builder_init(&builder, G_VARIANT_TYPE ("a{ss}"));
+            QMapIterator<QString, QVariant> it(v.toMap());
+            while (it.hasNext()) {
+                it.next();
+                QByteArray key = it.key().toUtf8();
+                QByteArray val = it.value().toByteArray();
+                g_variant_builder_add (&builder, "{ss}", key.constData(), val.constData());
+            }
+            return g_variant_builder_end (&builder);
         }
 
         // fall through
