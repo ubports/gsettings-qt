@@ -31,7 +31,7 @@ libgsettings-qt.so.1 libgsettings-qt1 #MINVER#
  (c++|optional=templinst)"QList<QVariant>::QList(QList<QVariant> const&)@Base" 0.1+14.04.20140408
  (c++|optional=templinst)"QList<QVariant>::~QList()@Base" 0.1+14.04.20140408
  (c++|optional=templinst)"QList<QVariant>::~QList()@Base" 0.1+14.04.20140408
- (c++)"QList<QString>::detach_helper_grow(int, int)@Base" 0replaceme
+ (c++|optional=templinst)"QList<QString>::detach_helper_grow(int, int)@Base" 0replaceme
  (c++)"QMap<QString, QVariant>::detach_helper()@Base" 0replaceme
  (c++)"QMap<QString, QVariant>::~QMap()@Base" 0replaceme
  (c++)"QMap<QString, QVariant>::~QMap()@Base" 0replaceme
