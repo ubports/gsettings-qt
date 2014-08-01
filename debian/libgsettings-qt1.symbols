@@ -31,12 +31,12 @@ libgsettings-qt.so.1 libgsettings-qt1 #MINVER#
  (c++|optional=templinst)"QList<QVariant>::QList(QList<QVariant> const&)@Base" 0.1+14.04.20140408
  (c++|optional=templinst)"QList<QVariant>::~QList()@Base" 0.1+14.04.20140408
  (c++|optional=templinst)"QList<QVariant>::~QList()@Base" 0.1+14.04.20140408
- (c++|optional=templinst)"QList<QString>::detach_helper_grow(int, int)@Base" 0replaceme
- (c++|optional=templinst)"QMap<QString, QVariant>::detach_helper()@Base" 0replaceme
- (c++)"QMap<QString, QVariant>::~QMap()@Base" 0replaceme
- (c++)"QMap<QString, QVariant>::~QMap()@Base" 0replaceme
- (c++)"QMapNode<QString, QVariant>::destroySubTree()@Base" 0replaceme
- (c++)"QMapNode<QString, QVariant>::copy(QMapData<QString, QVariant>*) const@Base" 0replaceme
+ (c++|optional=templinst)"QList<QString>::detach_helper_grow(int, int)@Base" 0.1+14.10.20140801.1
+ (c++|optional=templinst)"QMap<QString, QVariant>::detach_helper()@Base" 0.1+14.10.20140801.1
+ (c++)"QMap<QString, QVariant>::~QMap()@Base" 0.1+14.10.20140801.1
+ (c++)"QMap<QString, QVariant>::~QMap()@Base" 0.1+14.10.20140801.1
+ (c++)"QMapNode<QString, QVariant>::destroySubTree()@Base" 0.1+14.10.20140801.1
+ (c++)"QMapNode<QString, QVariant>::copy(QMapData<QString, QVariant>*) const@Base" 0.1+14.10.20140801.1
  (c++)"QString::~QString()@Base" 0.1+14.04.20140408
  (c++)"QString::~QString()@Base" 0.1+14.04.20140408
  (c++)"QGSettings::metaObject() const@Base" 0.1+14.04.20140408
