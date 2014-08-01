@@ -1,8 +1,20 @@
-gsettings-qt (0.1+14.10.20140624-0ubuntu2) UNRELEASED; urgency=low
+gsettings-qt (0.1+14.10.20140801.1-0ubuntu1) utopic; urgency=low
 
+  [ Ubuntu daily release ]
   * debian/libgsettings-qt1.symbols: auto-update to released version
+  * New rebuild forced
 
- -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Fri, 01 Aug 2014 17:06:54 +0000
+  [ Ken VanDine ]
+  * added tests for a{ss}
+
+  [ Lars Uebernickel ]
+  * qconftypes: support a{ss} We don't support a{sv} because gsettings
+    is typed more strictly than javascript and qvariant. (LP: #1349787)
+
+  [ Łukasz 'sil2100' Zemczak ]
+  * Work-around a symbols problem in ppc64el
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Fri, 01 Aug 2014 17:06:59 +0000
 
 gsettings-qt (0.1+14.10.20140624-0ubuntu1) utopic; urgency=low
 
