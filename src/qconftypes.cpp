@@ -53,6 +53,7 @@
  *  string             s         QString                QVariant::String
  *  string array*      as        QStringList            QVariant::StringList
  *  byte array         ay        QByteArray             QVariant::ByteArray
+ *  dictionary         a{ss}     QVariantMap            QVariant::Map
  *
  * [*] not strictly an array, but called as such for sake of
  *     consistency with the 'a' appearing in the DBus type system
@@ -106,140 +107,13 @@ QVariant::Type qconf_types_convert(const GVariantType *gtype)
         else if (g_variant_type_equal(gtype, G_VARIANT_TYPE_BYTESTRING))
             return QVariant::ByteArray;
 
+        else if (g_variant_type_equal(gtype, G_VARIANT_TYPE ("a{ss}")))
+            return QVariant::Map;
+
         // fall through
     default:
         return QVariant::Invalid;
     }
-}
-
-GVariant *qconf_types_collect(const GVariantType *gtype, const void *argument)
-{
-  switch (g_variant_type_peek_string(gtype)[0]) {
-    case G_VARIANT_CLASS_BOOLEAN:
-        return g_variant_new_boolean(*(const bool *) argument);
-
-    case G_VARIANT_CLASS_BYTE:
-        return g_variant_new_byte(*(const char *) argument);
-
-    case G_VARIANT_CLASS_INT16:
-        return g_variant_new_int16(*(const int *) argument);
-
-    case G_VARIANT_CLASS_UINT16:
-        return g_variant_new_uint16(*(const unsigned int *) argument);
-
-    case G_VARIANT_CLASS_INT32:
-        return g_variant_new_int32(*(const int *) argument);
-
-    case G_VARIANT_CLASS_UINT32:
-        return g_variant_new_uint32(*(const unsigned int *) argument);
-
-    case G_VARIANT_CLASS_INT64:
-        return g_variant_new_int64(*(const long long *) argument);
-
-    case G_VARIANT_CLASS_UINT64:
-        return g_variant_new_int64(*(const unsigned long long *) argument);
-
-    case G_VARIANT_CLASS_DOUBLE:
-        return g_variant_new_double(*(const double *) argument);
-
-    case G_VARIANT_CLASS_STRING:
-        {
-            const QString& string = *(const QString *) argument;
-            return g_variant_new_string(string.toUtf8());
-        }
-
-    case G_VARIANT_CLASS_ARRAY:
-        if (g_variant_type_equal(gtype, G_VARIANT_TYPE_STRING_ARRAY)) {
-            const QStringList& list = *(const QStringList *) argument;
-            GVariantBuilder builder;
-
-            g_variant_builder_init(&builder, G_VARIANT_TYPE_ARRAY);
-
-            Q_FOREACH (const QString& string, list)
-              g_variant_builder_add(&builder, "s", string.toUtf8().constData());
-
-            return g_variant_builder_end(&builder);
-        } else if (g_variant_type_equal(gtype, G_VARIANT_TYPE_BYTESTRING)) {
-            const QByteArray& array = *(const QByteArray *) argument;
-            gsize size = array.size();
-            gpointer data;
-
-            data = g_memdup(array.data(), size);
-
-            return g_variant_new_from_data(G_VARIANT_TYPE_BYTESTRING,
-                                           data, size, TRUE, g_free, data);
-        }
-
-        // fall through
-    default:
-        g_assert_not_reached();
-  }
-}
-
-void qconf_types_unpack(GVariant *value, void *argument)
-{
-  switch (g_variant_classify(value)) {
-    case G_VARIANT_CLASS_BOOLEAN:
-        *(bool *) argument = g_variant_get_boolean(value);
-        break;
-
-    case G_VARIANT_CLASS_BYTE:
-        *(char *) argument = g_variant_get_byte(value);
-        break;
-
-    case G_VARIANT_CLASS_INT16:
-        *(int *) argument = g_variant_get_int16(value);
-        break;
-
-    case G_VARIANT_CLASS_UINT16:
-        *(unsigned int *) argument = g_variant_get_uint16(value);
-        break;
-
-    case G_VARIANT_CLASS_INT32:
-        *(int *) argument = g_variant_get_int32(value);
-        break;
-
-    case G_VARIANT_CLASS_UINT32:
-        *(unsigned int *) argument = g_variant_get_uint32(value);
-        break;
-
-    case G_VARIANT_CLASS_INT64:
-        *(long long *) argument = g_variant_get_int64(value);
-        break;
-
-    case G_VARIANT_CLASS_UINT64:
-        *(unsigned long long *) argument = g_variant_get_uint64(value);
-        break;
-
-    case G_VARIANT_CLASS_DOUBLE:
-        *(double *) argument = g_variant_get_double(value);
-        break;
-
-    case G_VARIANT_CLASS_STRING:
-        *(QString *) argument = QString(g_variant_get_string(value, NULL));
-        break;
-
-    case G_VARIANT_CLASS_ARRAY:
-        if (g_variant_is_of_type(value, G_VARIANT_TYPE_STRING_ARRAY)) {
-            GVariantIter iter;
-            QStringList list;
-            const gchar *str;
-
-            g_variant_iter_init (&iter, value);
-            while (g_variant_iter_next (&iter, "&s", &str))
-                list.append (str);
-
-            *(QStringList *) argument = list;
-            break;
-        } else if (g_variant_is_of_type(value, G_VARIANT_TYPE_BYTESTRING)) {
-            *(QByteArray *) argument = QByteArray(g_variant_get_bytestring(value));
-            break;
-        }
-
-        // fall through
-    default:
-        g_assert_not_reached();
-  }
 }
 
 QVariant qconf_types_to_qvariant(GVariant *value)
@@ -288,6 +162,17 @@ QVariant qconf_types_to_qvariant(GVariant *value)
             return QVariant(list);
         } else if (g_variant_is_of_type(value, G_VARIANT_TYPE_BYTESTRING)) {
             return QVariant(QByteArray(g_variant_get_bytestring(value)));
+        } else if (g_variant_is_of_type(value, G_VARIANT_TYPE("a{ss}"))) {
+            GVariantIter iter;
+            QMap<QString, QVariant> map;
+            const gchar *key; 
+            const gchar *val;
+
+            g_variant_iter_init (&iter, value);
+            while (g_variant_iter_next (&iter, "{&s&s}", &key, &val))
+                map.insert(key, QVariant(val));
+
+            return map;
         }
 
         // fall through
@@ -349,6 +234,17 @@ GVariant *qconf_types_collect_from_variant(const GVariantType *gtype, const QVar
 
             return g_variant_new_from_data(G_VARIANT_TYPE_BYTESTRING,
                                            data, size, TRUE, g_free, data);
+        } else if (g_variant_type_equal(gtype, G_VARIANT_TYPE("a{ss}"))) {
+            GVariantBuilder builder;
+            g_variant_builder_init(&builder, G_VARIANT_TYPE ("a{ss}"));
+            QMapIterator<QString, QVariant> it(v.toMap());
+            while (it.hasNext()) {
+                it.next();
+                QByteArray key = it.key().toUtf8();
+                QByteArray val = it.value().toByteArray();
+                g_variant_builder_add (&builder, "{ss}", key.constData(), val.constData());
+            }
+            return g_variant_builder_end (&builder);
         }
 
         // fall through

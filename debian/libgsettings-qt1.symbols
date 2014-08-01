@@ -1,8 +1,6 @@
 libgsettings-qt.so.1 libgsettings-qt1 #MINVER#
  (c++)"qtify_name(char const*)@Base" 0.1+14.04.20140408
  (c++)"unqtify_name(QString const&)@Base" 0.1+14.04.20140408
- (c++)"qconf_types_unpack(_GVariant*, void*)@Base" 0.1+14.04.20140408
- (c++)"qconf_types_collect(_GVariantType const*, void const*)@Base" 0.1+14.04.20140408
  (c++)"qconf_types_convert(_GVariantType const*)@Base" 0.1+14.04.20140408
  (c++)"qconf_types_to_qvariant(_GVariant*)@Base" 0.1+14.04.20140408
  (c++)"qconf_types_collect_from_variant(_GVariantType const*, QVariant const&)@Base" 0.1+14.04.20140408
@@ -22,7 +20,6 @@ libgsettings-qt.so.1 libgsettings-qt1 #MINVER#
  (c++)"QGSettings::~QGSettings()@Base" 0.1+14.04.20140408
  (c++)"QGSettings::~QGSettings()@Base" 0.1+14.04.20140408
  (c++)"QGSettingsPrivate::settingChanged(_GSettings*, char const*, void*)@Base" 0.1+14.04.20140408
- (c++|optional=templinst)"QList<QString>::detach_helper_grow(int, int)@Base" 0.1+14.04.20140408
  (c++|optional=templinst)"QList<QString>::append(QString const&)@Base" 0.1+14.04.20140408
  (c++|optional=templinst)"QList<QString>::QList(QList<QString> const&)@Base" 0.1+14.04.20140408
  (c++|optional=templinst)"QList<QString>::QList(QList<QString> const&)@Base" 0.1+14.04.20140408
@@ -34,6 +31,12 @@ libgsettings-qt.so.1 libgsettings-qt1 #MINVER#
  (c++|optional=templinst)"QList<QVariant>::QList(QList<QVariant> const&)@Base" 0.1+14.04.20140408
  (c++|optional=templinst)"QList<QVariant>::~QList()@Base" 0.1+14.04.20140408
  (c++|optional=templinst)"QList<QVariant>::~QList()@Base" 0.1+14.04.20140408
+ (c++|optional=templinst)"QList<QString>::detach_helper_grow(int, int)@Base" 0replaceme
+ (c++)"QMap<QString, QVariant>::detach_helper()@Base" 0replaceme
+ (c++)"QMap<QString, QVariant>::~QMap()@Base" 0replaceme
+ (c++)"QMap<QString, QVariant>::~QMap()@Base" 0replaceme
+ (c++)"QMapNode<QString, QVariant>::destroySubTree()@Base" 0replaceme
+ (c++)"QMapNode<QString, QVariant>::copy(QMapData<QString, QVariant>*) const@Base" 0replaceme
  (c++)"QString::~QString()@Base" 0.1+14.04.20140408
  (c++)"QString::~QString()@Base" 0.1+14.04.20140408
  (c++)"QGSettings::metaObject() const@Base" 0.1+14.04.20140408
