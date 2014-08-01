@@ -31,6 +31,7 @@ TestCase {
     compare(settings.testBoolean, false);
     compare(settings.testString, 'hello');
     compare(settings.testStringList, ['one', 'two', 'three']);
+    compare(settings.testMap, {'foo': 'one', 'bar': 'two'});
 
     compare(testCase.bindingTest, 'hello');
   }
@@ -52,6 +53,11 @@ TestCase {
     compare(settings.testStringList, ['six']);
     settings.testStringList = [];
     compare(settings.testStringList, []);
+
+    settings.testMap = {'baz': 'three'}
+    compare(settings.testMap, {'baz': 'three'});
+    settings.testMap = {};
+    compare(settings.testMap, {});
 
     settings.testEnum = 'two';
     compare(settings.testEnum, 'two');
