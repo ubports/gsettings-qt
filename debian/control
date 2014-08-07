@@ -26,6 +26,7 @@ Architecture: any
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libgsettings-qt1 (= ${binary:Version}),
 Description: QML Bindings for GSettings
  Expose QML bindings for GSettings
  
