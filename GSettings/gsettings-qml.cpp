@@ -135,9 +135,9 @@ void GSettingsQml::componentComplete()
     if (schemaValid) {
         priv->settings = new QGSettings(priv->schema->id(), priv->schema->path(), this);
 
-        connect(priv->settings, SIGNAL(changed(const QString &)), this, SLOT(settingChanged(const QString &)));
+        connect(priv->settings, SIGNAL(changed(const QString &)), this, SLOT(settingChanged(const QString &)), Qt::QueuedConnection);
 
-        Q_FOREACH(QString key, priv->settings->keys())
+        Q_FOREACH(const QString &key, priv->settings->keys())
             this->insert(key, priv->settings->get(key));
 
         Q_EMIT(schemaChanged());

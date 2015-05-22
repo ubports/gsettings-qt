@@ -61,8 +61,6 @@ public:
 
     GSettingsSchemaQml * schema() const;
 
-    void updateKey(const char *gkey, bool emitChanged);
-
     void classBegin();
     void componentComplete();
 
