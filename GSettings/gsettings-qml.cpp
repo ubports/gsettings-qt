@@ -135,7 +135,7 @@ void GSettingsQml::componentComplete()
     if (schemaValid) {
         priv->settings = new QGSettings(priv->schema->id(), priv->schema->path(), this);
 
-        connect(priv->settings, SIGNAL(changed(const QString &)), this, SLOT(settingChanged(const QString &)), Qt::QueuedConnection);
+        connect(priv->settings, SIGNAL(changed(const QString &)), this, SLOT(settingChanged(const QString &)));
 
         Q_FOREACH(const QString &key, priv->settings->keys())
             this->insert(key, priv->settings->get(key));
@@ -152,6 +152,9 @@ void GSettingsQml::settingChanged(const QString &key)
     if (this->value(key) != value) {
         this->insert(key, value);
         Q_EMIT(changed(key, value));
+
+        // sync with glib event loop, cf. https://bugreports.qt.io/browse/QTBUG-32859
+        QCoreApplication::sendPostedEvents(0, QEvent::DeferredDelete);
     }
 }
 
