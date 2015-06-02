@@ -36,7 +36,8 @@ void QGSettingsPrivate::settingChanged(GSettings *, const gchar *key, gpointer u
 {
     QGSettings *self = (QGSettings *)user_data;
 
-    Q_EMIT(self->changed(qtify_name(key)));
+    // work around https://bugreports.qt.io/browse/QTBUG-32859 and http://pad.lv/1460970
+    QMetaObject::invokeMethod(self, "changed", Qt::QueuedConnection, Q_ARG(QString, qtify_name(key)));
 }
 
 QGSettings::QGSettings(const QByteArray &schema_id, const QByteArray &path, QObject *parent):

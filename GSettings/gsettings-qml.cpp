@@ -152,10 +152,6 @@ void GSettingsQml::settingChanged(const QString &key)
     if (this->value(key) != value) {
         this->insert(key, value);
         Q_EMIT(changed(key, value));
-
-        // send QEvent::DeferredDelete to avoid leaks
-        // cf. https://bugreports.qt.io/browse/QTBUG-32859 and http://pad.lv/1460970
-        QCoreApplication::sendPostedEvents(0, QEvent::DeferredDelete);
     }
 }
 
