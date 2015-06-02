@@ -2,9 +2,9 @@ TEMPLATE = app
 QT += testlib
 QT -= gui
 CONFIG += testcase link_pkgconfig
-TARGET = test2
+TARGET = cpptest
 IMPORTPATH = $$PWD/..
-SOURCES = test2.cpp
+SOURCES = cpptest.cpp
 PKGCONFIG += gsettings-qt
 
 schema.target = gschemas.compiled

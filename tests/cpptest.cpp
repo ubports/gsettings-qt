@@ -32,4 +32,4 @@ void TestDeferredDelete::test_deferredDelete()
 
 QTEST_MAIN(TestDeferredDelete)
 
-#include "test2.moc"
+#include "cpptest.moc"
