@@ -5,7 +5,8 @@ CONFIG += testcase link_pkgconfig
 TARGET = cpptest
 IMPORTPATH = $$PWD/..
 SOURCES = cpptest.cpp
-PKGCONFIG += gsettings-qt
+INCLUDEPATH += $$(PWD)/../src
+LIBS += -L$$(PWD)/../src -lgsettings-qt
 
 schema.target = gschemas.compiled
 schema.commands = glib-compile-schemas $$PWD
