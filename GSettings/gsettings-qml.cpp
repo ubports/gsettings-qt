@@ -137,7 +137,7 @@ void GSettingsQml::componentComplete()
 
         connect(priv->settings, SIGNAL(changed(const QString &)), this, SLOT(settingChanged(const QString &)));
 
-        Q_FOREACH(QString key, priv->settings->keys())
+        Q_FOREACH(const QString &key, priv->settings->keys())
             this->insert(key, priv->settings->get(key));
 
         Q_EMIT(schemaChanged());

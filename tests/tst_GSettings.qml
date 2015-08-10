@@ -11,8 +11,14 @@ TestCase {
   GSettings {
     id: settings
     schema.id: "com.canonical.gsettings.Test"
+    // has to be "valueChanged" signal, not "changed"; the latter doesn't work reliably with the in-memory gsettings backend
+    onValueChanged: changes.push([key, value]);
+  }
 
-    onChanged: changes.push([key, value]);
+  SignalSpy {
+    id: changesSpy
+    target: settings
+    signalName: "changed"
   }
 
   GSettings {
@@ -90,6 +96,7 @@ TestCase {
   function test_reset() {
     settings.testInteger = 4;
     settings.schema.reset('testInteger');
+    tryCompare(changesSpy, "count", 1); // this merely exists only to connect to the "changed" signal; resetting changes is async in gsettings
     compare(settings.testInteger, 42);
   }
 
