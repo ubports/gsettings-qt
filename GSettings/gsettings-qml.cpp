@@ -104,8 +104,13 @@ void GSettingsSchemaQml::reset(const QByteArray &key)
 {
     GSettingsQml *parent = (GSettingsQml *) this->parent();
 
-    if (parent->priv->settings != NULL)
+    if (parent->priv->settings != NULL) {
         parent->priv->settings->reset(key);
+
+        // make sure this object gets the new value immediately and not on the
+        // next main loop iteration (see updateValue)
+        parent->settingChanged(key);
+    }
 }
 
 GSettingsQml::GSettingsQml(QObject *parent): QQmlPropertyMap(this, parent)
@@ -161,6 +166,13 @@ QVariant GSettingsQml::updateValue(const QString& key, const QVariant &value)
         return QVariant();
 
     if (priv->settings->trySet(key, value)) {
+        // due to QTBUG-32859, QGSettings doesn't dispatch its changed signal
+        // directly, but on a new main loop iteration. At that point, this
+        // object already has the new value set and doesn't emit its own
+        // changed signal (see ::settingChanged). Emit it here so that it is
+        // sent even when the setting is changed from qml.
+        Q_EMIT(changed(key, value));
+
         return value;
     }
     else {
