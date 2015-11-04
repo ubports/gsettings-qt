@@ -15,6 +15,12 @@ TestCase {
     onValueChanged: changes.push([key, value]);
   }
 
+  SignalSpy {
+    id: changesSpy
+    target: settings
+    signalName: "changed"
+  }
+
   GSettings {
     id: invalid_settings
 
@@ -89,8 +95,11 @@ TestCase {
 
   function test_reset() {
     settings.testInteger = 4;
+
+    changesSpy.clear();
     settings.schema.reset('testInteger');
     compare(settings.testInteger, 42);
+    tryCompare(changesSpy, "count", 1);
   }
 
   function test_invalid_schema() {
