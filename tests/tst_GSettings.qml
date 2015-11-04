@@ -95,9 +95,11 @@ TestCase {
 
   function test_reset() {
     settings.testInteger = 4;
+
+    changesSpy.clear();
     settings.schema.reset('testInteger');
-    tryCompare(changesSpy, "count", 1); // this merely exists only to connect to the "changed" signal; resetting changes is async in gsettings
     compare(settings.testInteger, 42);
+    tryCompare(changesSpy, "count", 1);
   }
 
   function test_invalid_schema() {
