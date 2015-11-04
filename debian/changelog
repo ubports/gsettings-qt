@@ -1,3 +1,10 @@
+gsettings-qt (0.1+16.04.20151104-0ubuntu1) xenial; urgency=medium
+
+  [ Lars Uebernickel ]
+  * qgsettings-qml: explicitly emit changed events (LP: #1503693)
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Wed, 04 Nov 2015 17:59:13 +0000
+
 gsettings-qt (0.1+15.04.20150810-0ubuntu1) vivid; urgency=medium
 
   [ Lukáš Tinkl ]
