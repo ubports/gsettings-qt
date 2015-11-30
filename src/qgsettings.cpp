@@ -28,6 +28,7 @@ struct QGSettingsPrivate
     QByteArray path;
     GSettings *settings;
     GSettingsSchema *schema;
+    gulong signal_handler_id;
 
     static void settingChanged(GSettings *settings, const gchar *key, gpointer user_data);
 };
@@ -53,13 +54,14 @@ QGSettings::QGSettings(const QByteArray &schema_id, const QByteArray &path, QObj
         priv->settings = g_settings_new_with_path(priv->schema_id.constData(), priv->path.constData());
 
     g_object_get (priv->settings, "settings-schema", &priv->schema, NULL);
-    g_signal_connect(priv->settings, "changed", G_CALLBACK(QGSettingsPrivate::settingChanged), this);
+    priv->signal_handler_id = g_signal_connect(priv->settings, "changed", G_CALLBACK(QGSettingsPrivate::settingChanged), this);
 }
 
 QGSettings::~QGSettings()
 {
     if (priv->schema) {
         g_settings_sync ();
+        g_signal_handler_disconnect(priv->settings, priv->signal_handler_id);
         g_object_unref (priv->settings);
         g_settings_schema_unref (priv->schema);
     }
