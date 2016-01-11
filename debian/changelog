@@ -1,3 +1,10 @@
+gsettings-qt (0.1+16.04.20160111-0ubuntu1) xenial; urgency=medium
+
+  [ Albert Astals Cid ]
+  * Disconnect signal handler on destruction
+
+ -- Michał Sawicz <michal.sawicz@canonical.com>  Mon, 11 Jan 2016 11:26:52 +0000
+
 gsettings-qt (0.1+16.04.20151130-0ubuntu1) xenial; urgency=medium
 
   * No-change rebuild.
