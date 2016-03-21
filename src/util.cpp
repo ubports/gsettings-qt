@@ -32,7 +32,7 @@ QString qtify_name(const char *name)
         if (*name == '-') {
             next_cap = true;
         } else if (next_cap) {
-            result.append(toupper(*name));
+            result.append(QChar(*name).toUpper().toLatin1());
             next_cap = false;
         } else {
             result.append(*name);
@@ -63,7 +63,7 @@ gchar * unqtify_name(const QString &name)
     for (p = bytes.constData(); *p; p++) {
         if (isupper(*p)) {
             g_string_append_c (str, '-');
-            g_string_append_c (str, tolower(*p));
+            g_string_append_c (str, QChar(*p).toLower().toLatin1());
         }
         else {
             g_string_append_c (str, *p);
