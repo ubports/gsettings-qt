@@ -61,9 +61,10 @@ gchar * unqtify_name(const QString &name)
     str = g_string_new (NULL);
 
     for (p = bytes.constData(); *p; p++) {
-        if (isupper(*p)) {
+        const QChar c(*p);
+        if (c.isUpper()) {
             g_string_append_c (str, '-');
-            g_string_append_c (str, QChar(*p).toLower().toLatin1());
+            g_string_append_c (str, c.toLower().toLatin1());
         }
         else {
             g_string_append_c (str, *p);
