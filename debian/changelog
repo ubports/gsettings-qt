@@ -1,3 +1,10 @@
+gsettings-qt (0.1+16.04.20160329-0ubuntu1) xenial; urgency=medium
+
+  [ Albert Astals Cid ]
+  * Use QChar toUpper/toLower instead of C version (LP: #1556461)
+
+ -- Michał Sawicz <michal.sawicz@canonical.com>  Tue, 29 Mar 2016 12:56:42 +0000
+
 gsettings-qt (0.1+16.04.20160111-0ubuntu1) xenial; urgency=medium
 
   [ Albert Astals Cid ]
