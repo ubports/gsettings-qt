@@ -5,12 +5,17 @@
 #export DH_VERBOSE=1
 export QT_SELECT=qt5
 
+# Skip tests on the archs they are known to be flaky
+testskip_architectures := powerpc
+
 override_dh_install:
 	rm -rf debian/*/usr/tests
 	dh_install --fail-missing
 
 override_dh_auto_test:
-	xvfb-run -a dh_auto_test
+ifneq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), $(testskip_architectures)))
+	QT_QPA_PLATFORM=minimal LD_LIBRARY_PATH=../src GSETTINGS_BACKEND=memory GSETTINGS_SCHEMA_DIR=. xvfb-run -a dh_auto_test
+endif
 
 override_dh_makeshlibs:
 	dh_makeshlibs -- -c4

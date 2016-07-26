@@ -1,48 +1,37 @@
+# SymbolsHelper-Confirmed: 0.1+16.04.20160329-0ubuntu2 amd64 arm64 armhf i386 ppc64el
 libgsettings-qt.so.1 libgsettings-qt1 #MINVER#
- (c++)"qtify_name(char const*)@Base" 0.1+14.04.20140408
- (c++)"unqtify_name(QString const&)@Base" 0.1+14.04.20140408
- (c++)"qconf_types_convert(_GVariantType const*)@Base" 0.1+14.04.20140408
- (c++)"qconf_types_to_qvariant(_GVariant*)@Base" 0.1+14.04.20140408
- (c++)"qconf_types_collect_from_variant(_GVariantType const*, QVariant const&)@Base" 0.1+14.04.20140408
  (c++)"QByteArray::~QByteArray()@Base" 0.1+14.04.20140408
- (c++)"QByteArray::~QByteArray()@Base" 0.1+14.04.20140408
+ (c++)"QGSettings::QGSettings(QByteArray const&, QByteArray const&, QObject*)@Base" 0.1+14.04.20140408
+ (c++)"QGSettings::changed(QString const&)@Base" 0.1+14.04.20140408
+ (c++)"QGSettings::choices(QString const&) const@Base" 0.1+14.04.20140408
+ (c++)"QGSettings::get(QString const&) const@Base" 0.1+14.04.20140408
+ (c++)"QGSettings::isSchemaInstalled(QByteArray const&)@Base" 0.1+14.04.20140408
+ (c++)"QGSettings::keys() const@Base" 0.1+14.04.20140408
+ (c++)"QGSettings::metaObject() const@Base" 0.1+14.04.20140408
  (c++)"QGSettings::qt_metacall(QMetaObject::Call, int, void**)@Base" 0.1+14.04.20140408
  (c++)"QGSettings::qt_metacast(char const*)@Base" 0.1+14.04.20140408
- (c++)"QGSettings::staticMetaObject@Base" 0.1+14.04.20140408
- (c++)"QGSettings::isSchemaInstalled(QByteArray const&)@Base" 0.1+14.04.20140408
- (c++)"QGSettings::set(QString const&, QVariant const&)@Base" 0.1+14.04.20140408
  (c++)"QGSettings::reset(QString const&)@Base" 0.1+14.04.20140408
+ (c++)"QGSettings::set(QString const&, QVariant const&)@Base" 0.1+14.04.20140408
+ (c++)"QGSettings::staticMetaObject@Base" 0.1+14.04.20140408
  (c++)"QGSettings::trySet(QString const&, QVariant const&)@Base" 0.1+14.04.20140408
- (c++)"QGSettings::changed(QString const&)@Base" 0.1+14.04.20140408
- (c++)"QGSettings::QGSettings(QByteArray const&, QByteArray const&, QObject*)@Base" 0.1+14.04.20140408
- (c++)"QGSettings::QGSettings(QByteArray const&, QByteArray const&, QObject*)@Base" 0.1+14.04.20140408
- (c++)"QGSettings::~QGSettings()@Base" 0.1+14.04.20140408
- (c++)"QGSettings::~QGSettings()@Base" 0.1+14.04.20140408
  (c++)"QGSettings::~QGSettings()@Base" 0.1+14.04.20140408
  (c++)"QGSettingsPrivate::settingChanged(_GSettings*, char const*, void*)@Base" 0.1+14.04.20140408
  (c++|optional=templinst)"QList<QString>::append(QString const&)@Base" 0.1+14.04.20140408
- (c++|optional=templinst)"QList<QString>::QList(QList<QString> const&)@Base" 0.1+14.04.20140408
- (c++|optional=templinst)"QList<QString>::QList(QList<QString> const&)@Base" 0.1+14.04.20140408
- (c++|optional=templinst)"QList<QString>::~QList()@Base" 0.1+14.04.20140408
- (c++|optional=templinst)"QList<QString>::~QList()@Base" 0.1+14.04.20140408
- (c++|optional=templinst)"QList<QVariant>::detach_helper_grow(int, int)@Base" 0.1+14.04.20140408
- (c++|optional=templinst)"QList<QVariant>::append(QVariant const&)@Base" 0.1+14.04.20140408
- (c++|optional=templinst)"QList<QVariant>::QList(QList<QVariant> const&)@Base" 0.1+14.04.20140408
- (c++|optional=templinst)"QList<QVariant>::QList(QList<QVariant> const&)@Base" 0.1+14.04.20140408
- (c++|optional=templinst)"QList<QVariant>::~QList()@Base" 0.1+14.04.20140408
- (c++|optional=templinst)"QList<QVariant>::~QList()@Base" 0.1+14.04.20140408
  (c++|optional=templinst)"QList<QString>::detach_helper_grow(int, int)@Base" 0.1+14.10.20140801.1
- (c++|optional=templinst)"QMap<QString, QVariant>::detach_helper()@Base" 0.1+14.10.20140801.1
+ (c++|optional=templinst)"QList<QString>::~QList()@Base" 0.1+14.04.20140408
+ (c++|optional=templinst|arch=!ppc64el)"QList<QVariant>::append(QVariant const&)@Base" 0.1+14.04.20140408
+ (c++|optional=templinst)"QList<QVariant>::detach_helper_grow(int, int)@Base" 0.1+14.04.20140408
+ (c++|optional=templinst)"QList<QVariant>::~QList()@Base" 0.1+14.04.20140408
  (c++)"QMap<QString, QVariant>::~QMap()@Base" 0.1+14.10.20140801.1
- (c++)"QMap<QString, QVariant>::~QMap()@Base" 0.1+14.10.20140801.1
- (c++)"QMapNode<QString, QVariant>::destroySubTree()@Base" 0.1+14.10.20140801.1
  (c++)"QMapNode<QString, QVariant>::copy(QMapData<QString, QVariant>*) const@Base" 0.1+14.10.20140801.1
+ (c++)"QMapNode<QString, QVariant>::destroySubTree()@Base" 0.1+14.10.20140801.1
  (c++)"QString::~QString()@Base" 0.1+14.04.20140408
- (c++)"QString::~QString()@Base" 0.1+14.04.20140408
- (c++)"QGSettings::metaObject() const@Base" 0.1+14.04.20140408
- (c++)"QGSettings::get(QString const&) const@Base" 0.1+14.04.20140408
- (c++)"QGSettings::keys() const@Base" 0.1+14.04.20140408
- (c++)"QGSettings::choices(QString const&) const@Base" 0.1+14.04.20140408
+ (optional=templinst)_ZN8QMapDataI7QString8QVariantE7destroyEv@Base 0.1+16.04.20160329-0ubuntu2
+ (c++)"qconf_types_collect_from_variant(_GVariantType const*, QVariant const&)@Base" 0.1+14.04.20140408
+ (c++)"qconf_types_convert(_GVariantType const*)@Base" 0.1+14.04.20140408
+ (c++)"qconf_types_to_qvariant(_GVariant*)@Base" 0.1+14.04.20140408
+ (c++)"qtify_name(char const*)@Base" 0.1+14.04.20140408
  (c++)"typeinfo for QGSettings@Base" 0.1+14.04.20140408
  (c++)"typeinfo name for QGSettings@Base" 0.1+14.04.20140408
+ (c++)"unqtify_name(QString const&)@Base" 0.1+14.04.20140408
  (c++)"vtable for QGSettings@Base" 0.1+14.04.20140408

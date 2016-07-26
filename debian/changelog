@@ -1,3 +1,12 @@
+gsettings-qt (0.1+16.04.20160329-0ubuntu2~4) yakkety; urgency=medium
+
+  * Build against Qt 5.6.
+  * Adjust test running to changes in Qt 5.6.
+  * debian/control: don't use transitional package names
+  * Update symbols.
+
+ -- Timo Jyrinki <timo-jyrinki@ubuntu.com>  Fri, 01 Apr 2016 10:12:26 +0000
+
 gsettings-qt (0.1+16.04.20160329-0ubuntu1) xenial; urgency=medium
 
   [ Albert Astals Cid ]
