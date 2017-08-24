@@ -26,6 +26,11 @@ libgsettings-qt.so.1 libgsettings-qt1 #MINVER#
  (c++)"QMapNode<QString, QVariant>::copy(QMapData<QString, QVariant>*) const@Base" 0.1+14.10.20140801.1
  (c++)"QMapNode<QString, QVariant>::destroySubTree()@Base" 0.1+14.10.20140801.1
  (c++)"QString::~QString()@Base" 0.1+14.04.20140408
+ (optional=templinst)_ZN4QMapI7QString8QVariantEC1ERKS2_@Base 0.1+16.04.20160329-0ubuntu2
+ (optional=templinst)_ZN4QMapI7QString8QVariantEC2ERKS2_@Base 0.1+16.04.20160329-0ubuntu2
+ (optional=templinst)_ZN5QListI7QStringEC1ERKS1_@Base 0.1+16.04.20160329-0ubuntu2
+ (optional=templinst)_ZN5QListI7QStringEC2ERKS1_@Base 0.1+16.04.20160329-0ubuntu2
+ (optional=templinst|arch=ppc64el)_ZN5QListI8QVariantE6appendERKS0_@Base 0.1+16.04.20160329-0ubuntu2
  (optional=templinst)_ZN8QMapDataI7QString8QVariantE7destroyEv@Base 0.1+16.04.20160329-0ubuntu2
  (c++)"qconf_types_collect_from_variant(_GVariantType const*, QVariant const&)@Base" 0.1+14.04.20140408
  (c++)"qconf_types_convert(_GVariantType const*)@Base" 0.1+14.04.20140408
