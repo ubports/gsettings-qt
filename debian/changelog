@@ -1,3 +1,9 @@
+gsettings-qt (0.2+ubports) xenial; urgency=medium
+
+  * Imported to UBports
+
+ -- UBports auto importer <infra@ubports.com>  Thu, 26 Oct 2017 13:41:36 +0200
+
 gsettings-qt (0.1+17.10.20170824-0ubuntu1) artful; urgency=medium
 
   * Update debian/libgsettings-qt1.symbols with the latest symbols
