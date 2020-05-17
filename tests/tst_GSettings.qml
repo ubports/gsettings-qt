@@ -12,7 +12,7 @@ TestCase {
     id: settings
     schema.id: "com.canonical.gsettings.Test"
     // has to be "valueChanged" signal, not "changed"; the latter doesn't work reliably with the in-memory gsettings backend
-    onValueChanged: changes.push([key, value]);
+    onValueChanged: testCase.changes.push([key, value]);
   }
 
   SignalSpy {
