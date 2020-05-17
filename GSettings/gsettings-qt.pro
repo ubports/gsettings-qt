@@ -25,6 +25,6 @@ INSTALLS += extra
 
 qmltypes.path = $$installPath
 qmltypes.files = plugins.qmltypes
-qmltypes.extra = export LD_PRELOAD=../src/libgsettings-qt.so.1; $$[QT_INSTALL_BINS]/qmlplugindump -notrelocatable GSettings 1.0 .. > $(INSTALL_ROOT)/$$installPath/plugins.qmltypes
+qmltypes.extra = export LD_LIBRARY_PATH=$$PWD/../src; $$[QT_INSTALL_BINS]/qmlplugindump -notrelocatable GSettings 1.0 .. > $(INSTALL_ROOT)/$$installPath/plugins.qmltypes
 INSTALLS += qmltypes
 
